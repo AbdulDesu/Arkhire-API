@@ -33,6 +33,44 @@ module.exports = {
           }
         })
       })
+    },
+
+    deleteTalentModel: (talentID) => {
+      return new Promise((resolve, reject) => {
+        db.query(`DELETE FROM talent WHERE talentID = ${talentID}`, (err, result, fields) => {
+          if (!err) {
+            resolve(result)
+          } else {
+            reject(new Error(err))
+          }
+        })
+      })
+    },
+
+    putTalentModel: (talentID, name, email, noHp, password, status, updatedAt) => {
+      return new Promise((resolve, reject) => {
+        const queryUpdate = `UPDATE talent SET name = '${name}', email = '${email}', noHp = '${noHp}', password = '${password}', status = '${status}', updatedAt = '${updatedAt}' WHERE talentID = ${talentID}`
+        db.query(queryUpdate, (err, result, fields) => {
+          if (!err) {
+            resolve(result)
+          } else {
+            reject(new Error(err))
+          }
+        })
+      })
+    },
+
+    patchTalentModel: (dataColumn, talentID) => {
+      return new Promise((resolve, reject) => {
+        const queryUpdate = `UPDATE talent SET ${dataColumn} WHERE talentID = ${talentID}`
+        db.query(queryUpdate, (err, result, _fields) => {
+          if (!err) {
+            resolve(result)
+          } else {
+            reject(new Error(err))
+          }
+        })
+      })
     }
   }
   

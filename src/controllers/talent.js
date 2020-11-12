@@ -1,4 +1,4 @@
-const { getAllTalentModel, getTalentByIDModel, createTalentModel} = require('../models/talent')
+const { getAllTalentModel, getTalentByIDModel, createTalentModel, deleteTalentModel, putTalentModel, patchTalentModel} = require('../models/talent')
 
 module.exports = {
     getAllTalent: (req, res) => {
@@ -68,10 +68,11 @@ module.exports = {
         })
       }
     },
+
     createTalent: async (req,res) => {
       try {
         const { name, email, noHp, password, status, createdAt, updatedAt } = req.body
-        const result = await createProjectModel(name, email, noHp, password, status, createdAt, updatedAt)
+        const result = await createTalentModel(name, email, noHp, password, status, createdAt, updatedAt)
         if (result.affectedRows) {
           res.status(200).send({
             success: true,
@@ -87,6 +88,133 @@ module.exports = {
         res.status(500).send({
           success: false,
           message: 'Internal Server Error, Please try again later'
+        })
+      }
+    },
+
+    deleteTalent: async (req,res) => {
+      try {
+        const {talentID} = req.params
+
+        const resSelect = await getTalentByIDModel (talentID)
+        if (resSelect.length) {
+          const resDelete = await deleteTalentModel(talentID)
+          if (resDelete.affectedRows) {
+            res.status(200).send({
+              success: true,
+              message: `Talent With id ${talentID} has been deleted succesfully`
+            })
+          } else {
+            res.status(404).send({
+              success: false,
+              message: 'Failed to delete talent'
+            })
+          }
+        } else {
+          res.status(404).send({
+            success: false,
+            message: `Talent with id ${talentID} not found`
+          })
+        }
+      } catch (error) {
+        console.log(error)
+        req.status(500).send({
+          success: false,
+          message: 'Internal server error, Please Try Again Later'
+        })
+      }
+    },
+
+    putTalent: async (req,res) => {
+      try {
+        const { talentID } = req.params
+        const { name, email, noHp, password, status, updatedAt } = req.body
+  
+        if (name.trim() && email.trim() &&  noHp.trim() && password.trim() && status.trim() && updatedAt.trim()) {
+          const resSelect = await getTalentByIDModel(talentID)
+          if (resSelect.length) {
+            const resUpdate = await putTalentModel(talentID, name, email, noHp, password, status, updatedAt)
+            if (resUpdate.affectedRows) {
+              res.status(200).send({
+                success: true,
+                message: `Talent with id ${talentID} updated succesfully`
+              })
+            } else {
+              res.status(404).send({
+                success: false,
+                message: 'Talent update failed'
+              })
+            }
+          } else {
+            res.status(404).send({
+              success: false,
+              message: `Talent with id ${talentID} not found`
+            })
+          }
+        } else {
+          res.status(400).send({
+            success: false,
+            message: 'Please fill all field!'
+          })
+        }
+      } catch (error) {
+        console.log(error)
+        req.status(500).send({
+          success: false,
+          message: 'Internal server error, Please try again later'
+        })
+      }
+    },
+
+    patchTalent: async (req, res) => {
+      try {
+        const { talentID } = req.params
+        const {
+          name = '', 
+          email = '', 
+          noHp = '', 
+          password = '', 
+          status = '', 
+          updatedAt = ''
+        } = req.body
+  
+        if (name.trim() || email.trim() ||  noHp.trim() || password.trim() || status.trim() || updatedAt.trim()) {
+          const resSelect = await getTalentByIDModel(talentID)
+          if (resSelect.length) {
+            const dataColumn = Object.entries(req.body).map(item => {
+              const queryDynamic = parseInt(item[1]) > 0 ? `${item[0] = item[1]}` : `${item[0]}='${item[1]}'`
+              return queryDynamic
+            })
+  
+            const resUpdate = await patchTalentModel(dataColumn, talentID)
+            if (resUpdate.affectedRows) {
+              res.status(200).send({
+                success: true,
+                message: `Talent with id ${talentID} updated succesfully`
+              })
+            } else {
+              res.status(400).send({
+                success: false,
+                message: 'Talent data failed to update'
+              })
+            }
+          } else {
+            res.status(404).send({
+              success: false,
+              message: `Talent with id ${projectId} not found`
+            })
+          }
+        } else {
+          res.status(400).send({
+            success: false,
+            message: 'Please, Fill all field!'
+          })
+        }
+      } catch (error) {
+        console.log(error)
+        req.status(500).send({
+          success: false,
+          message: 'Internal server error, Please try again later!'
         })
       }
     }
