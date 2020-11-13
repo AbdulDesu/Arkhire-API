@@ -201,7 +201,7 @@ module.exports = {
           } else {
             res.status(404).send({
               success: false,
-              message: `Talent with id ${projectId} not found`
+              message: `Talent with id ${talentID} not found`
             })
           }
         } else {
