@@ -7,6 +7,7 @@ const routerTalent = require('./src/routers/talent')
 const routerCompany = require('./src/routers/company')
 const routerTalentSkill = require('./src/routers/talentSkill')
 const routerTalentAddress = require('./src/routers/talentAddress')
+const routerTalentFullData = require('./src/routers/talentFullData')
 const bodyparser = require('body-parser');
 
 //MiddleWare
@@ -15,6 +16,7 @@ app.use('/talent', routerTalent)
 app.use('/company', routerCompany)
 app.use('/talentskill', routerTalentSkill)
 app.use('/talentaddress', routerTalentAddress)
+app.use('/talentfulldata', routerTalentFullData)
 
 
 app.get('/', (request, response) => {
