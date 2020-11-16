@@ -1,4 +1,4 @@
-const {query} = require('express')
+const { query } = require('express')
 require('dotenv').config()
 const express = require('express')
 const app = express()
@@ -8,21 +8,20 @@ const routerCompany = require('./src/routers/company')
 const routerTalentSkill = require('./src/routers/talentSkill')
 const routerTalentAddress = require('./src/routers/talentAddress')
 const routerTalentFullData = require('./src/routers/talentFullData')
-const bodyparser = require('body-parser');
+const bodyparser = require('body-parser')
 
-//MiddleWare
-app.use(bodyparser.urlencoded({extended: false}))
+// MiddleWare
+app.use(bodyparser.urlencoded({ extended: false }))
 app.use('/talent', routerTalent)
 app.use('/company', routerCompany)
 app.use('/talentskill', routerTalentSkill)
 app.use('/talentaddress', routerTalentAddress)
 app.use('/talentfulldata', routerTalentFullData)
 
-
 app.get('/', (request, response) => {
-    response.send('Welcome to Arkhire, Your Hiring Apps')
+  response.send('Welcome to Arkhire, Your Hiring Apps')
 })
 
-app.listen(port,() => {
-    console.log(`Arkhire Express running at http://localhost:${port}`)
+app.listen(port, () => {
+  console.log(`Arkhire Express running at http://localhost:${port}`)
 })

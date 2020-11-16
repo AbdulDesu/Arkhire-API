@@ -3,6 +3,6 @@ const { getTalentFullData } = require('../controllers/talentFullData')
 
 const router = Router()
 
-router.get('/:talentID', getTalentFullData)
+router.get('/', getTalentFullData)
 
 module.exports = router

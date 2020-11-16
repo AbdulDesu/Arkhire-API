@@ -2,7 +2,7 @@ const db = require('../helpers/db')
 const talent = require('./talent')
 
 module.exports = {
-  getAllTalentAddressModel:(searchKey, searchValue, limit, offset, callback) => {
+  getAllTalentAddressModel: (searchKey, searchValue, limit, offset, callback) => {
     db.query(`SELECT * FROM addresstalent WHERE ${searchKey} LIKE '%${searchValue}%' LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
       if (!err) {
         callback(result)
@@ -64,68 +64,68 @@ module.exports = {
   },
 
   patchTalent: async (req, res) => {
-      try {
-        const { talentID } = req.params
-        const {
-          name = '', 
-          email = '', 
-          noHp = '', 
-          password = '', 
-          status = '', 
-          updatedAt = ''
-        } = req.body
-  
-        if (name.trim() || email.trim() ||  noHp.trim() || password.trim() || status.trim() || updatedAt.trim()) {
-          const resSelect = await getTalentByIDModel(talentID)
-          if (resSelect.length) {
-            const dataColumn = Object.entries(req.body).map(item => {
-              const queryDynamic = parseInt(item[1]) > 0 ? `${item[0] = item[1]}` : `${item[0]}='${item[1]}'`
-              return queryDynamic
+    try {
+      const { talentID } = req.params
+      const {
+        name = '',
+        email = '',
+        noHp = '',
+        password = '',
+        status = '',
+        updatedAt = ''
+      } = req.body
+
+      if (name.trim() || email.trim() || noHp.trim() || password.trim() || status.trim() || updatedAt.trim()) {
+        const resSelect = await getTalentByIDModel(talentID)
+        if (resSelect.length) {
+          const dataColumn = Object.entries(req.body).map(item => {
+            const queryDynamic = parseInt(item[1]) > 0 ? `${item[0] = item[1]}` : `${item[0]}='${item[1]}'`
+            return queryDynamic
+          })
+
+          const resUpdate = await patchTalentModel(dataColumn, talentID)
+          if (resUpdate.affectedRows) {
+            res.status(200).send({
+              success: true,
+              message: `Talent with id ${talentID} updated succesfully`
             })
-  
-            const resUpdate = await patchTalentModel(dataColumn, talentID)
-            if (resUpdate.affectedRows) {
-              res.status(200).send({
-                success: true,
-                message: `Talent with id ${talentID} updated succesfully`
-              })
-            } else {
-              res.status(400).send({
-                success: false,
-                message: 'Talent data failed to update'
-              })
-            }
           } else {
-            res.status(404).send({
+            res.status(400).send({
               success: false,
-              message: `Talent with id ${talentID} not found`
+              message: 'Talent data failed to update'
             })
           }
         } else {
-          res.status(400).send({
+          res.status(404).send({
             success: false,
-            message: 'Please, Fill all field!'
+            message: `Talent with id ${talentID} not found`
           })
         }
-      } catch (error) {
-        console.log(error)
-        req.status(500).send({
+      } else {
+        res.status(400).send({
           success: false,
-          message: 'Internal server error, Please try again later!'
+          message: 'Please, Fill all field!'
         })
       }
-    },
-
-    patchTalentAddressModel: (dataColumn, talentID) => {
-      return new Promise((resolve, reject) => {
-        const queryUpdate = `UPDATE addresstaleny SET ${dataColumn} WHERE talentID = ${talentID}`
-        db.query(queryUpdate, (err, result, _fields) => {
-          if (!err) {
-            resolve(result)
-          } else {
-            reject(new Error(err))
-          }
-        })
+    } catch (error) {
+      console.log(error)
+      req.status(500).send({
+        success: false,
+        message: 'Internal server error, Please try again later!'
       })
     }
+  },
+
+  patchTalentAddressModel: (dataColumn, talentID) => {
+    return new Promise((resolve, reject) => {
+      const queryUpdate = `UPDATE addresstaleny SET ${dataColumn} WHERE talentID = ${talentID}`
+      db.query(queryUpdate, (err, result, _fields) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(new Error(err))
+        }
+      })
+    })
+  }
 }
