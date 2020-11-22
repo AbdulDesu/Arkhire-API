@@ -41,7 +41,7 @@ student. Company can Hire the best prospective workers based on their criteria, 
 5. Create a database with the name arkhire, and Import file sql to **phpmyadmin**
 6. Open Postman desktop application or Chrome web app extension that has installed before
 7. Choose HTTP Method and enter request url.(ex. localhost:3000/)
-8. You can see all the end point [here](#end-point)
+8. You can see all the end point [here](#link-postman)
 
 ## Set up .env file
 
@@ -59,5 +59,7 @@ JWT_KEY =YOUR_JWT_KEY
 ADMIN_KEY =YOUR_ADMIN_KEY
 ```
 
+## Link Postman  
 
-# Link Postman : LINK
+You can see all the endpoint, In My Postman Documentation here:
+https://documenter.getpostman.com/view/13582341/TVev4Q5k
