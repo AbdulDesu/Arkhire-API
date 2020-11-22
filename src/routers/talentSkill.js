@@ -1,13 +1,12 @@
 const { Router } = require('express')
-const { getAllTalentSkill, getTalentSkillByTalentID, createTalentSkill, deleteTalentSkill, putTalentSkill, patchTalentSkill } = require('../controllers/talentSkill')
+const { getAllTalentSkill, getTalentSkillByTalentID , updateTalentSkill } = require('../controllers/talentSkill')
 
 const router = Router()
 
-router.get('/', getAllTalentSkill)
-router.get('/:talentID', getTalentSkillByTalentID)
-router.post('/', createTalentSkill)
-router.delete('/:talentID', deleteTalentSkill)
-router.put('/:talentID', putTalentSkill)
-router.patch('/:talentID', patchTalentSkill)
+const { talentAuthorization } = require('../middleware/auth')
+
+router.get('/', talentAuthorization, getAllTalentSkill)
+router.get('/:talentID', talentAuthorization, getTalentSkillByTalentID)
+router.put('/:talentID', talentAuthorization, updateTalentSkill)
 
 module.exports = router

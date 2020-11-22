@@ -23,11 +23,10 @@ module.exports = {
     })
   },
 
-  createCompanyModel: (name, email, password, noHp, companyName, companyPosition, status, createdAt, updatedAt) => {
+  createCompanyModel: (data) => {
     return new Promise((resolve, reject) => {
-      const query = `INSERT INTO company (name, email, password, noHp, companyName, companyPosition, status, createdAt, updatedAt) VALUES 
-            ('${name}', '${email}', '${password}', '${noHp}', '${companyName}', '${companyPosition}', '${status}', '${createdAt}', '${updatedAt}')`
-      db.query(query, (err, result, fields) => {
+      const query = `INSERT INTO company SET ?`
+      db.query(query, data, (err, result, fields) => {
         if (!err) {
           resolve(result)
         } else {
@@ -37,35 +36,10 @@ module.exports = {
     })
   },
 
-  deleteCompanyModel: (companyID) => {
+  updateCompanyModel: (companyID, inputData) => {
     return new Promise((resolve, reject) => {
-      db.query(`DELETE FROM company WHERE companyID = ${companyID}`, (err, result, fields) => {
-        if (!err) {
-          resolve(result)
-        } else {
-          reject(new Error(err))
-        }
-      })
-    })
-  },
-
-  putCompanyModel: (companyID, name, email, password, noHp, companyName, companyPosition, status, updatedAt) => {
-    return new Promise((resolve, reject) => {
-      const queryUpdate = `UPDATE company SET name = '${name}', email = '${email}', password = '${password}', noHp = '${noHp}', companyName = '${companyName}', companyPosition = '${companyPosition}', status = '${status}', updatedAt = '${updatedAt}' WHERE companyID = ${companyID}`
-      db.query(queryUpdate, (err, result, fields) => {
-        if (!err) {
-          resolve(result)
-        } else {
-          reject(new Error(err))
-        }
-      })
-    })
-  },
-
-  patchCompanyModel: (dataColumn, companyID) => {
-    return new Promise((resolve, reject) => {
-      const queryUpdate = `UPDATE company SET ${dataColumn} WHERE companyID = ${companyID}`
-      db.query(queryUpdate, (err, result, fields) => {
+      const queryUpdate = `UPDATE company SET ? WHERE companyID = ${companyID}`
+      db.query(queryUpdate, inputData, (err, result, fields) => {
         if (!err) {
           resolve(result)
         } else {

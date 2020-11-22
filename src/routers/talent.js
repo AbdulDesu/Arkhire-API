@@ -1,13 +1,16 @@
 const { Router } = require('express')
-const { getAllTalent, getTalentByID, createTalent, deleteTalent, putTalent, patchTalent } = require('../controllers/talent')
+const { getTalentByID, filterTalentByName, filterTalentByLocation, filterTalentByTitle, filterTalentByWorkTime, updateTalent } = require('../controllers/talent')
 
 const router = Router()
 
-router.get('/', getAllTalent)
-router.get('/:talentID', getTalentByID)
-router.post('/', createTalent)
-router.delete('/:talentID', deleteTalent)
-router.put('/:talentID', putTalent)
-router.patch('/:talentID', patchTalent)
+const { talentAuthorization } = require('../middleware/auth')
+const uploadImage = require('../middleware/multer_talent')
+
+router.get('/:talentID', talentAuthorization, getTalentByID)
+router.get('/filter/name', talentAuthorization, filterTalentByName)
+router.get('/filter/title', talentAuthorization, filterTalentByTitle)
+router.get('/filter/location', talentAuthorization, filterTalentByLocation)
+router.get('/filter/time', talentAuthorization, filterTalentByWorkTime)
+router.put('/:talentID', talentAuthorization, uploadImage, updateTalent)
 
 module.exports = router

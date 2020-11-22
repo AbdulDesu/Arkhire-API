@@ -1,7 +1,38 @@
-const { getAllTalentModel, getTalentByIDModel, createTalentModel, deleteTalentModel, putTalentModel, patchTalentModel } = require('../models/talent')
+const { getTalentByIDModel, filterTalentByNameModel, filterTalentByLocationModel, filterTalentByTitleModel, filterTalentByWorkTimeModel, updateTalentModel } = require('../models/talent')
 
 module.exports = {
-  getAllTalent: (req, res) => {
+
+  //Get A Talent By Their ID 
+  getTalentByID: async (req, res, _fields) => {
+    const { talentID } = req.params
+
+    try {
+      const result = await getTalentByIDModel(talentID)
+
+      if(result.length){
+        res.status(200).send({
+          success: true,
+          message: `Talent with id ${talentID}`,
+          data: result
+        })
+      } else {
+        res.status(404).send({
+          success: false,
+          message: 'Talent Not Found!'
+        })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      req.status(500).send({
+      success: false,
+      message: 'Internal server error, Please try again later!'
+      })
+    }
+   },
+
+  //Filter Talent By Name
+  filterTalentByName: (req, res) => {
     let { search, limit, page } = req.query
     let searchKey = ''
     let searchValue = ''
@@ -10,12 +41,12 @@ module.exports = {
       searchKey = Object.keys(search)[0]
       searchValue = Object.values(search)[0]
     } else {
-      searchKey = 'name'
+      searchKey = 'account_name'
       searchValue = search || ''
     }
 
     if (!limit) {
-      limit = 50
+      limit = 10
     } else {
       limit = parseInt(limit)
     }
@@ -28,166 +59,170 @@ module.exports = {
 
     const offset = (page - 1) * limit
 
-    getAllTalentModel(searchKey, searchValue, limit, offset, result => {
+    filterTalentByNameModel(searchKey, searchValue, limit, offset, result => {
       if (result.length) {
         res.status(200).send({
           success: true,
-          message: 'Talent List',
+          message: 'Filtering talent with that name..',
           data: result
         })
       } else {
         res.status(404).send({
           success: false,
-          message: 'Talent Not Found!'
+          message: 'Location Not Found!'
         })
       }
     })
   },
-  getTalentByID: async (req, res) => {
-    try {
-      const { talentID } = req.params
 
-      const result = await getTalentByIDModel(talentID)
+  // Filter Talent By Location
+  filterTalentByLocation: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'talent_city'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 10
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
+    filterTalentByLocationModel(searchKey, searchValue, limit, offset, result => {
       if (result.length) {
         res.status(200).send({
           success: true,
-          message: `Talent with id ${talentID}`,
-          data: result[0]
+          message: 'Filtering Talent By Location..',
+          data: result
         })
       } else {
         res.status(404).send({
           success: false,
-          message: `Talent data with id ${talentID} Not Found!`
+          message: 'Location Not Found!'
         })
       }
-    } catch (error) {
-      console.log(error)
-      req.status(500).send({
-        success: false,
-        message: 'Internal server error, Please try again later'
-      })
-    }
+    })
   },
 
-  createTalent: async (req, res) => {
-    try {
-      const { name, email, noHp, password, status, createdAt, updatedAt } = req.body
-      const result = await createTalentModel(name, email, noHp, password, status, createdAt, updatedAt)
-      if (result.affectedRows) {
+  //Filter Talent By Job title
+  filterTalentByTitle: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'talent_tittle'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 10
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
+    filterTalentByTitleModel(searchKey, searchValue, limit, offset, result => {
+      if (result.length) {
         res.status(200).send({
           success: true,
-          message: 'Talent added succesfully'
+          message: 'Filtering Talent By Title..',
+          data: result
         })
-      } else {
-        res.status(400).send({
-          success: false,
-          message: 'Failed to add talent'
-        })
-      }
-    } catch (error) {
-      res.status(500).send({
-        success: false,
-        message: 'Internal Server Error, Please try again later'
-      })
-    }
-  },
-
-  deleteTalent: async (req, res) => {
-    try {
-      const { talentID } = req.params
-
-      const resSelect = await getTalentByIDModel(talentID)
-      if (resSelect.length) {
-        const resDelete = await deleteTalentModel(talentID)
-        if (resDelete.affectedRows) {
-          res.status(200).send({
-            success: true,
-            message: `Talent With id ${talentID} has been deleted succesfully`
-          })
-        } else {
-          res.status(404).send({
-            success: false,
-            message: 'Failed to delete talent'
-          })
-        }
       } else {
         res.status(404).send({
           success: false,
-          message: `Talent with id ${talentID} not found`
+          message: 'Sorry, We not find any talent with that tittle'
         })
       }
-    } catch (error) {
-      console.log(error)
-      req.status(500).send({
-        success: false,
-        message: 'Internal server error, Please Try Again Later'
-      })
-    }
+    })
   },
 
-  putTalent: async (req, res) => {
-    try {
-      const { talentID } = req.params
-      const { name, email, noHp, password, status, updatedAt } = req.body
+  //Filter Talent By Work Time
+  filterTalentByWorkTime: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
 
-      if (name.trim() && email.trim() && noHp.trim() && password.trim() && status.trim() && updatedAt.trim()) {
-        const resSelect = await getTalentByIDModel(talentID)
-        if (resSelect.length) {
-          const resUpdate = await putTalentModel(talentID, name, email, noHp, password, status, updatedAt)
-          if (resUpdate.affectedRows) {
-            res.status(200).send({
-              success: true,
-              message: `Talent with id ${talentID} updated succesfully`
-            })
-          } else {
-            res.status(404).send({
-              success: false,
-              message: 'Talent update failed'
-            })
-          }
-        } else {
-          res.status(404).send({
-            success: false,
-            message: `Talent with id ${talentID} not found`
-          })
-        }
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'talent_time'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 10
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
+    filterTalentByWorkTimeModel(searchKey, searchValue, limit, offset, result => {
+      if (result.length) {
+        res.status(200).send({
+          success: true,
+          message: 'Filtering Talent By Work Time..',
+          data: result
+        })
       } else {
-        res.status(400).send({
+        res.status(404).send({
           success: false,
-          message: 'Please fill all field!'
+          message: 'We Only Have Fulltime or Freelance Worker here, Please Try Again.'
         })
       }
-    } catch (error) {
-      console.log(error)
-      req.status(500).send({
-        success: false,
-        message: 'Internal server error, Please try again later'
-      })
-    }
+    })
   },
 
-  patchTalent: async (req, res) => {
+  updateTalent: async (req, res, _fields) => {
+    const { talentID } = req.params
+    req.body.talent_image = req.file === undefined ? '' : req.file.filename
+
+    const data = {
+      ...req.body,
+      talent_image: req.body.talent_image
+    }
+    delete data.talent_image
+
     try {
-      const { talentID } = req.params
-      const {
-        name = '',
-        email = '',
-        noHp = '',
-        password = '',
-        status = '',
-        updatedAt = ''
-      } = req.body
+      const caughtData = await getTalentByIDModel(talentID)
 
-      if (name.trim() || email.trim() || noHp.trim() || password.trim() || status.trim() || updatedAt.trim()) {
-        const resSelect = await getTalentByIDModel(talentID)
-        if (resSelect.length) {
-          const dataColumn = Object.entries(req.body).map(item => {
-            const queryDynamic = parseInt(item[1]) > 0 ? `${item[0] = item[1]}` : `${item[0]}='${item[1]}'`
-            return queryDynamic
-          })
-
-          const resUpdate = await patchTalentModel(dataColumn, talentID)
-          if (resUpdate.affectedRows) {
+      if (caughtData.length) {
+        const result = await updateTalentModel(talentID, req.body)
+          if (result.affectedRows) {
             res.status(200).send({
               success: true,
               message: `Talent with id ${talentID} updated succesfully`
@@ -195,27 +230,21 @@ module.exports = {
           } else {
             res.status(400).send({
               success: false,
-              message: 'Talent data failed to update'
+              message: 'Failed to update talent'
             })
           }
         } else {
           res.status(404).send({
             success: false,
-            message: `Talent with id ${talentID} not found`
+            message: `Talent data with id ${talentID} Not Found!`
           })
-        }
-      } else {
-        res.status(400).send({
+        }      
+      } catch (error) {
+        console.log(error)
+        res.status(500).send({
           success: false,
-          message: 'Please, Fill all field!'
+          message: 'Internal Server Error, Please try again later'
         })
-      }
-    } catch (error) {
-      console.log(error)
-      req.status(500).send({
-        success: false,
-        message: 'Internal server error, Please try again later!'
-      })
     }
   }
 }
