@@ -60,4 +60,7 @@ ADMIN_KEY =YOUR_ADMIN_KEY
 ```
 
 
-# Link Postman : LINK
+## Link Postman  
+
+You can see all the endpoint, In My Postman Documentation here:
+https://documenter.getpostman.com/view/13582341/TVev4Q5k
