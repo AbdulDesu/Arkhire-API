@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2020 at 06:05 AM
+-- Generation Time: Nov 22, 2020 at 04:56 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -72,11 +72,11 @@ CREATE TABLE `achivement` (
 --
 
 INSERT INTO `achivement` (`achivementID`, `talentID`, `talent_github`, `talent_cv`) VALUES
-(1, 1, 'https://localhost:300', ''),
-(2, 2, 'https://localhost:300', ''),
-(3, 3, 'https://localhost:300', ''),
-(4, 4, 'https://localhost:300', ''),
-(5, 5, 'https://localhost:300', 'talent_cv-1606011781199.jpg');
+(1, 1, 'https://localhost:3000', 'talent_cv-1606060100461.jpg'),
+(2, 2, 'https://localhost:3000', 'talent_cv-1606060129323.jpg'),
+(3, 3, 'https://localhost:3000', 'talent_cv-1606060155364.jpg'),
+(4, 4, 'https://localhost:3000', 'talent_cv-1606060165176.jpg'),
+(5, 5, 'https://localhost:3000', 'talent_cv-1606060176042.jpg');
 
 -- --------------------------------------------------------
 
@@ -132,7 +132,8 @@ INSERT INTO `companyproject` (`projectID`, `project_tittle`, `project_duration`,
 (1, 'Create Hyperion Absent Apps', '1 WEEK', 'Make A Automatic absent for hyperion employee', 'Kami Menwarkan Fasilitas Lorem Ipsum dolor sid amet', '3000000', 'Saturday, November 21, 2020 10:34 AM', 'Saturday, November 21, 2020 10:34 AM'),
 (2, 'Create Hololive Website', '1 WEEK', 'In this project, we invite you to contribute on our...', 'Kami Menwarkan Fasilitas Lorem Ipsum dolor sid amet', '8000000', 'Saturday, November 21, 2020 5:46 PM', 'Saturday, November 21, 2020 5:46 PM'),
 (4, 'Create A Hololive Visual Novel Game', '1 MONTH', 'In this project, we invite you to contribute on our...', 'Kami Menwarkan Fasilitas Lorem Ipsum dolor sid amet', '12000000', 'Sunday, November 22, 2020 7:15 AM', 'Sunday, November 22, 2020 9:32 AM'),
-(5, 'Update our Deep Fake Tech', '3 MONTH', 'In this project, we invite you to contribute on our...', 'Kami Menwarkan Fasilitas Lorem Ipsum dolor sid amet', '14000000', 'Sunday, November 22, 2020 9:31 AM', 'Sunday, November 22, 2020 9:31 AM');
+(5, 'Update our Deep Fake Tech', '3 MONTH', 'In this project, we invite you to contribute on our...', 'Kami Menwarkan Fasilitas Lorem Ipsum dolor sid amet', '14000000', 'Sunday, November 22, 2020 9:31 AM', 'Sunday, November 22, 2020 9:31 AM'),
+(7, 'Make me a music player apps', '6 MONTH', 'In this project, we invite you to contribute on our...', 'Kami Menwarkan Fasilitas Lorem Ipsum dolor sid amet', '14000000', 'Sunday, November 22, 2020 10:53 PM', 'Sunday, November 22, 2020 10:53 PM');
 
 -- --------------------------------------------------------
 
@@ -156,7 +157,8 @@ INSERT INTO `hiring` (`offeringID`, `projectID`, `hiring_status`, `reply_message
 (1, 1, 'Approved', 'Thank for invite me, I Accept you offering letter sir', 'Saturday, November 21, 2020 5:48 PM'),
 (2, 2, 'Declined', 'Sorry, I am in other busy project', 'Saturday, November 21, 2020 5:47 PM'),
 (4, 4, 'Approved', 'Thank for invite me, I am ready to become your employee', 'Sunday, November 22, 2020 7:20 AM'),
-(5, 5, 'Declined', 'Thank for invite me, I am ready to become your employee', 'Sunday, November 22, 2020 9:33 AM');
+(5, 5, 'Declined', 'Thank for invite me, I am ready to become your employee', 'Sunday, November 22, 2020 9:33 AM'),
+(7, 7, 'Declined', 'Sorry i...', 'Sunday, November 22, 2020 10:54 PM');
 
 -- --------------------------------------------------------
 
@@ -184,7 +186,7 @@ INSERT INTO `talent` (`talentID`, `accountID`, `talent_tittle`, `talent_time`, `
 (2, 2, 'Fullstack Mobile', 'Fulltime', 'Jakarta', 'Saya asuna, Best Partner Kananto', 'talent_image-1606007291343.jpg', 'Sunday, November 22, 2020 8:08 AM'),
 (3, 4, 'Android Developer', 'Freelance', 'Bandung', 'Lorem ipsum dolor sit amet', 'talent_image-1606007601407.jpg', 'Sunday, November 22, 2020 8:13 AM'),
 (4, 6, 'Devops Engineer', 'Freelance', 'Bandung', 'Hajimemashite watashi wa hoshou marine desu..', 'talent_image-1606007896539.png', 'Sunday, November 22, 2020 8:18 AM'),
-(5, 8, 'Fullstack Web', 'Fulltime', 'Jakarta', 'Lorem ipsum dolor sit amed', 'talent_image-1606008707295.jpg', 'Sunday, November 22, 2020 8:31 AM');
+(5, 8, 'Fullstack Web', 'Fulltime', 'Jakarta', 'Lorem ipsum dolor sit amed', 'talent_image-1606060265625.jpg', 'Sunday, November 22, 2020 10:51 PM');
 
 -- --------------------------------------------------------
 
@@ -291,13 +293,13 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `companyproject`
 --
 ALTER TABLE `companyproject`
-  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `hiring`
 --
 ALTER TABLE `hiring`
-  MODIFY `offeringID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `offeringID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `talent`
@@ -326,6 +328,12 @@ ALTER TABLE `achivement`
 --
 ALTER TABLE `company`
   ADD CONSTRAINT `company_ibfk_1` FOREIGN KEY (`accountID`) REFERENCES `account` (`accountID`);
+
+--
+-- Constraints for table `hiring`
+--
+ALTER TABLE `hiring`
+  ADD CONSTRAINT `hiring_ibfk_1` FOREIGN KEY (`projectID`) REFERENCES `companyproject` (`projectID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `talent`
