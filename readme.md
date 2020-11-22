@@ -13,8 +13,8 @@ student. Company can Hire the best prospective workers based on their criteria, 
 
 ## Package used in this project
 
-[![Express.js](https://img.shields.io/badge/Express.js-4.x-orange.svg?style=rounded-square)](https://expressjs.com/en/starter/installing.html)
-[![Node.js](https://img.shields.io/badge/Node.js-v.12.13-green.svg?style=rounded-square)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.17.1-orange.svg?style=rounded-square)](https://expressjs.com/en/starter/installing.html)
+[![Node.js](https://img.shields.io/badge/Node.js-v.14.15.0-green.svg?style=rounded-square)](https://nodejs.org/)
 [![MySql](https://img.shields.io/badge/Mysql-v.2.18.1-blue.svg?style=rounded-square)](https://www.npmjs.com/package/mysql)
 [![Body-Parser](https://img.shields.io/badge/BodyParser-v.1.19.0-yellow.svg?style=rounded-square)](https://www.npmjs.com/package/body-parser)
 [![dotenv](https://img.shields.io/badge/dotenv-v.8.2.0-cyan.svg?style=rounded-square)](https://www.npmjs.com/package/dotenv)
