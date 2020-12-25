@@ -2,8 +2,8 @@ const { Router } = require('express')
 const { checkProjectResponse } = require('../controllers/projectresp')
 
 const router = Router()
-const { companyAuthorization } = require('../middleware/auth')
+const { allMemberAuthorization } = require('../middleware/auth')
 
-router.get('/', companyAuthorization, checkProjectResponse)
+router.get('/', allMemberAuthorization, checkProjectResponse)
 
 module.exports = router
