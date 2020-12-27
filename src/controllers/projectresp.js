@@ -10,12 +10,12 @@ module.exports = {
           searchKey = Object.keys(search)[0]
           searchValue = Object.values(search)[0]
         } else {
-          searchKey = 'project_tittle'
+          searchKey = 'hiring_status'
           searchValue = search || ''
         }
     
         if (!limit) {
-          limit = 5
+          limit = 50
         } else {
           limit = parseInt(limit)
         }
