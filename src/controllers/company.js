@@ -71,8 +71,8 @@ module.exports = {
 
   createCompany: async (req, res) => {
     try {
-      const { company_name, company_position, company_location, company_type, company_detail, updatedAt } = req.body
-      const result = await createCompanyModel(company_name, company_position, company_location, company_type, company_detail, updatedAt)
+      const { company_name, company_position, company_type, company_detail, company_latitude, company_longitude, company_linkedin, company_instagram, company_facebook, updatedAt } = req.body
+      const result = await createCompanyModel(company_name, company_position, company_type, company_detail, company_latitude, company_longitude,  company_linkedin, company_instagram, company_facebook, updatedAt)
       if (result.affectedRows) {
         res.status(200).send({
           success: true,
