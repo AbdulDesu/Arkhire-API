@@ -69,7 +69,7 @@ module.exports = {
       } else {
         res.status(404).send({
           success: false,
-          message: 'Location Not Found!'
+          message: 'Talent Not Found!'
         })
       }
     })
