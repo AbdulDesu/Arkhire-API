@@ -3,14 +3,14 @@ const { getTalentByID, filterTalentByName, filterTalentByLocation, filterTalentB
 
 const router = Router()
 
-const { talentAuthorization } = require('../middleware/auth')
+const { talentAuthorization, allMemberAuthorization } = require('../middleware/auth')
 const uploadImage = require('../middleware/multer_talent')
 
-router.get('/:talentID', talentAuthorization, getTalentByID)
-router.get('/filter/name', talentAuthorization, filterTalentByName)
-router.get('/filter/title', talentAuthorization, filterTalentByTitle)
-router.get('/filter/location', talentAuthorization, filterTalentByLocation)
-router.get('/filter/time', talentAuthorization, filterTalentByWorkTime)
+router.get('/:talentID', allMemberAuthorization, getTalentByID)
+router.get('/filter/name', allMemberAuthorization, filterTalentByName)
+router.get('/filter/title', allMemberAuthorization, filterTalentByTitle)
+router.get('/filter/location', allMemberAuthorization, filterTalentByLocation)
+router.get('/filter/time', allMemberAuthorization, filterTalentByWorkTime)
 router.put('/:talentID', talentAuthorization, uploadImage, updateTalent)
 
 module.exports = router
