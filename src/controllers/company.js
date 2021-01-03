@@ -101,9 +101,9 @@ module.exports = {
       company_image: req.body.company_image
     }
     delete data.company_image
-
+    
     try {
-      
+
       const caughtData = await getCompanyByIDModel(companyID)
 
       if (caughtData.length) {

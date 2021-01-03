@@ -8,7 +8,6 @@ module.exports = {
         p.project_tittle, 
         p.project_duration, 
         p.project_desc, 
-        p.fortalent_message, 
         p.project_sallary, 
         h.hiring_status, 
         h.reply_message, 

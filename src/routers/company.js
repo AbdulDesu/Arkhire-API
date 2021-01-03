@@ -3,11 +3,11 @@ const { getAllCompany, getCompanyByID, createCompany, updateCompany } = require(
 const router = Router()
 
 const { companyAuthorization, allMemberAuthorization } = require('../middleware/auth')
-const uploadImage = require('../middleware/multer_company')
+const uploadCompanyImage = require('../middleware/multer_company')
 
 router.get('/', allMemberAuthorization, getAllCompany)
 router.get('/:companyID',  allMemberAuthorization, getCompanyByID)
 router.post('/',  companyAuthorization, createCompany)
-router.put('/:companyID',  companyAuthorization, uploadImage, updateCompany)
+router.put('/:companyID',  companyAuthorization, uploadCompanyImage, updateCompany)
 
 module.exports = router
