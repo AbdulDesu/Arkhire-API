@@ -9,7 +9,7 @@ const {
 
 
 router.get('/admin', adminAuthorization, getAllAccount)
-router.get('/:accountID', adminAuthorization, getAccountByID)
+router.get('/:accountID', allMemberAuthorization, getAccountByID)
 router.post('/register', createAccount)
 router.post('/login', loginAccount)
 router.put('/:accountID', allMemberAuthorization, updateAccount)
