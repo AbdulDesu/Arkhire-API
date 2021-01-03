@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2021 at 05:48 AM
+-- Generation Time: Jan 03, 2021 at 05:57 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -34,8 +34,8 @@ CREATE TABLE `account` (
   `account_phone` varchar(15) DEFAULT NULL,
   `password` text DEFAULT NULL,
   `privilege` int(11) DEFAULT NULL,
-  `createdAt` text DEFAULT current_timestamp(),
-  `updatedAt` text DEFAULT current_timestamp()
+  `createdAt` text DEFAULT NULL,
+  `updatedAt` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -61,8 +61,8 @@ INSERT INTO `account` (`accountID`, `account_name`, `account_email`, `account_ph
 (16, 'Inugami Korone', 'Korone@hololive.jp', '082488515178', '$2b$10$XR52jnLqiBKmewED28Ud9uvCHO45gO0dHKn5mgUeTZ42lrbX4YhA6', 0, 'Sunday, November 22, 2020 11:25 PM', 'Sunday, November 22, 2020 11:25 PM'),
 (17, 'Nekomata Okayu', 'Okayu@hololive.jp', '082488515178', '$2b$10$qOy2s/V8xGA3tvLx5c5WR.bdx3rJ56h9xbhZci8xSiNEg9rxWwxWe', 0, 'Sunday, November 22, 2020 11:26 PM', 'Sunday, November 22, 2020 11:26 PM'),
 (18, 'Alucard', 'Heynotbad@gmail.com', '082488515178', '$2b$10$DW1TRxlzSRJTXSsg/97dbe2rN/aog3AznpwASsEMwtiPz.uH9mSvi', 0, 'Monday, November 23, 2020 2:10 PM', 'Monday, November 23, 2020 2:10 PM'),
-(19, 'Usada Pekora', 'UsadaPekora@hololive.jp', '08785151123', '$2b$10$3dT8p/8Vr5xgjFDPb21SpOZmOgFDjadvL0rE3IU/GxCC59iX910X.', 0, NULL, NULL),
-(20, 'Hitotsuyanagi Riri', 'hitotsuyanagi.riri@gardens.com', '02287898212', '$2b$10$.GbGDBVtUJuWF.kjRAho/.XVO1Wf/q8mjlPRpFCQpaNRknGWSR2CO', 1, NULL, NULL),
+(19, 'Usada Pekora', 'UsadaPekora@hololive.jp', '08785151123', '$2b$10$3dT8p/8Vr5xgjFDPb21SpOZmOgFDjadvL0rE3IU/GxCC59iX910X.', 0, '', ''),
+(20, 'Hitotsuyanagi Riri', 'hitotsuyanagi.riri@gardens.com', '02287898212', '$2b$10$.GbGDBVtUJuWF.kjRAho/.XVO1Wf/q8mjlPRpFCQpaNRknGWSR2CO', 1, '', ''),
 (21, 'admin', 'admin@gmail.com', '0222121123', '$2b$10$Ru.j/kMxPx0/WdGizuDaBOiuIAIf4qEeMAoJYKhNXD5RHZ0oFyt9S', 991399361, 'Saturday, January 2, 2021 10:40 PM', 'Saturday, January 2, 2021 10:40 PM');
 
 -- --------------------------------------------------------
@@ -117,7 +117,7 @@ CREATE TABLE `company` (
   `company_instagram` text DEFAULT NULL,
   `company_facebook` text DEFAULT NULL,
   `company_image` text DEFAULT NULL,
-  `updatedAt` text DEFAULT current_timestamp()
+  `updatedAt` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -144,8 +144,8 @@ CREATE TABLE `companyproject` (
   `project_duration` varchar(50) DEFAULT NULL,
   `project_desc` varchar(500) DEFAULT NULL,
   `project_sallary` varchar(25) DEFAULT NULL,
-  `postedAt` text DEFAULT current_timestamp(),
-  `updatedAt` text DEFAULT current_timestamp()
+  `postedAt` text DEFAULT NULL,
+  `updatedAt` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `hiring` (
   `projectID` int(11) NOT NULL,
   `hiring_status` enum('Waiting','Approved','Declined') NOT NULL DEFAULT 'Waiting',
   `reply_message` varchar(250) DEFAULT NULL,
-  `repliedAt` text DEFAULT current_timestamp()
+  `repliedAt` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -203,7 +203,7 @@ CREATE TABLE `talent` (
   `talent_profile` varchar(480) DEFAULT NULL,
   `talent_github` text DEFAULT NULL,
   `talent_image` text DEFAULT NULL,
-  `updatedAt` text DEFAULT current_timestamp()
+  `updatedAt` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -240,7 +240,7 @@ CREATE TABLE `talentskill` (
   `skill_3` varchar(20) DEFAULT NULL,
   `skill_4` varchar(20) DEFAULT NULL,
   `skill_5` varchar(20) DEFAULT NULL,
-  `updatedAt` text DEFAULT current_timestamp()
+  `updatedAt` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
