@@ -96,6 +96,15 @@ module.exports = {
       },
 
       createPortfolio: async (req, res) => {
+        req.body.portfolio_image = req.file === undefined ? '' : req.file.filename
+  
+      const data = {
+        ...req.body,
+        portfolio_image: req.body.portfolio_image
+      }
+      
+      delete data.portfolio_image
+      
         try {
           const result = await createPortfolioModel(req.body)
           if (result.affectedRows) {

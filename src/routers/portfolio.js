@@ -9,7 +9,7 @@ const uploadImage = require('../middleware/multer_portfolio')
 router.get('/', allMemberAuthorization, getPortfolio)
 router.get('/:portfolioID', allMemberAuthorization, getPortfolioByID)
 router.get('/owner/:portfolio_owner', allMemberAuthorization, getPortfolioByOwnerID)
-router.post('/createportfolio', talentAuthorization, createPortfolio)
+router.post('/createportfolio', talentAuthorization, uploadImage, createPortfolio)
 router.put('/:portfolioID', talentAuthorization, uploadImage, updatePortfolio)
 
 module.exports = router
