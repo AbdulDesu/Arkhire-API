@@ -31,8 +31,9 @@ module.exports = {
             project_duration: inputData.project_duration,
             project_desc: inputData.project_desc,
             project_sallary: inputData.project_sallary,
-            postedAt: inputData.postedAt,
-            updatedAt: inputData.updatedAt
+            project_owner: inputData.project_owner,
+            project_target: inputData.project_target,
+            postedAt: inputData.postedAt
           }
           const query = `INSERT INTO companyproject SET ?`
           db.query(query, projectData, async (err, result, fields) => {

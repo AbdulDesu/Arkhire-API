@@ -80,6 +80,7 @@ module.exports = {
       ...req.body,
       talent_cv: req.body.talent_cv
     }
+    
     delete data.talent_cv
 
         try {
