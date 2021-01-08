@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { getPortfolio, getPortfolioByID, getPortfolioByOwnerID, createPortfolio, updatePortfolio } = require('../controllers/portfolio')
+const { getPortfolio, getPortfolioByID, getPortfolioByOwnerID, createPortfolio, updatePortfolio, deletePortfolio } = require('../controllers/portfolio')
 
 const router = Router()
 
@@ -11,5 +11,6 @@ router.get('/:portfolioID', allMemberAuthorization, getPortfolioByID)
 router.get('/owner/:portfolio_owner', allMemberAuthorization, getPortfolioByOwnerID)
 router.post('/createportfolio', talentAuthorization, uploadImage, createPortfolio)
 router.put('/:portfolioID', talentAuthorization, uploadImage, updatePortfolio)
+router.delete('/:portfolioID', talentAuthorization, deletePortfolio)
 
 module.exports = router

@@ -1,4 +1,4 @@
-const { getAllPortfolioModel, getPortfolioByIDModel, getPortfolioByOwnerIDModel, createPortfolioModel, updatePortfolioModel } = require('../models/portfolio')
+const { getAllPortfolioModel, getPortfolioByIDModel, getPortfolioByOwnerIDModel, createPortfolioModel, updatePortfolioModel, deletePortfolioModel } = require('../models/portfolio')
 module.exports = {
     getPortfolio: (req, res) => {
         let { search, limit, page } = req.query
@@ -110,12 +110,12 @@ module.exports = {
           if (result.affectedRows) {
             res.status(200).send({
               success: true,
-              message: 'Experience Created!'
+              message: 'Portfolio Created!'
             })
           } else {
             res.status(400).send({
               success: false,
-              message: 'Failed to add experience'
+              message: 'Failed to add portfolio'
             })
           }
         } catch (error) {
@@ -127,41 +127,74 @@ module.exports = {
         }
       },
 
-      updatePortfolio: async (req, res) => {
-        const { portfolioID } = req.params
-        req.body.portfolio_image = req.file === undefined ? '' : req.file.filename
-  
-      const data = {
-        ...req.body,
-        portfolio_image: req.body.portfolio_image
-      }
-      
-      delete data.portfolio_image
-  
-          try {
-            const catchData = await getPortfolioByIDModel(portfolioID)
-      
-            if (catchData.length) {
-              const result = await updatePortfolioModel(portfolioID, req.body)
-              if (result.affectedRows) {
-                  res.status(200).send({
-                    success: true,
-                    message: `Portfolio Updated Succesfully`
-                  })
-                } else {
-                  console.log(error)
-                  res.status(404).send({
-                    success: false,
-                    message: 'Portfolio Not Found!'
-                  })
-                }
+    updatePortfolio: async (req, res) => {
+      const { portfolioID } = req.params
+      req.body.portfolio_image = req.file === undefined ? '' : req.file.filename
+
+    const data = {
+      ...req.body,
+      portfolio_image: req.body.portfolio_image
+    }
+    
+    delete data.portfolio_image
+
+        try {
+          const catchData = await getPortfolioByIDModel(portfolioID)
+    
+          if (catchData.length) {
+            const result = await updatePortfolioModel(portfolioID, req.body)
+            if (result.affectedRows) {
+                res.status(200).send({
+                  success: true,
+                  message: `Portfolio Updated Succesfully`
+                })
+              } else {
+                console.log(error)
+                res.status(404).send({
+                  success: false,
+                  message: 'Portfolio Not Found!'
+                })
               }
-            } catch (error) {
-              console.log(error)
-              req.status(500).send({
-              success: false,
-              message: 'Internal server error, Please try again later!'
-              })
             }
+          } catch (error) {
+            console.log(error)
+            req.status(500).send({
+            success: false,
+            message: 'Internal server error, Please try again later!'
+            })
+          }
+      },
+
+    deletePortfolio: async (req, res) => {
+      try {
+        const { portfolioID } = req.params
+  
+        const resSelect = await getPortfolioByIDModel(portfolioID)
+        if (resSelect.length) {
+          const resDelete = await deletePortfolioModel(portfolioID)
+          if (resDelete.affectedRows) {
+            res.status(200).send({
+              success: true,
+              message: `Portfolio With id ${portfolioID} has been deleted succesfully`
+            })
+          } else {
+            res.status(404).send({
+              success: false,
+              message: 'Failed to delete portfolio'
+            })
+          }
+        } else {
+          res.status(404).send({
+            success: false,
+            message: `portfolio with id ${portfolioID} not found`
+          })
         }
+      } catch (error) {
+        console.log(error)
+        req.status(500).send({
+          success: false,
+          message: 'Internal server error, Please Try Again Later'
+        })
+      }
+    }
 }

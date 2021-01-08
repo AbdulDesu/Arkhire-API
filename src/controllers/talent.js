@@ -1,4 +1,4 @@
-const { getTalentByIDModel, filterTalentByNameModel, filterTalentByLocationModel, filterTalentByTitleModel, filterTalentByWorkTimeModel, updateTalentModel } = require('../models/talent')
+const { getTalentByIDModel, getTalentByAccountIDModel, filterTalentByNameModel, filterTalentByLocationModel, filterTalentByTitleModel, filterTalentByWorkTimeModel, updateTalentModel } = require('../models/talent')
 
 module.exports = {
 
@@ -13,6 +13,35 @@ module.exports = {
         res.status(200).send({
           success: true,
           message: `Talent with id ${talentID}`,
+          data: result
+        })
+      } else {
+        res.status(404).send({
+          success: false,
+          message: 'Talent Not Found!'
+        })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      req.status(500).send({
+      success: false,
+      message: 'Internal server error, Please try again later!'
+      })
+    }
+   },
+
+   //Get A Talent By Their accountID 
+  getTalentByAccountID: async (req, res, _fields) => {
+    const { accountID } = req.params
+
+    try {
+      const result = await this.getTalentByAccountIDModel(accountID)
+
+      if(result.length){
+        res.status(200).send({
+          success: true,
+          message: `Talent with account id ${accountID}`,
           data: result
         })
       } else {

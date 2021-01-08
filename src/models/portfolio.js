@@ -71,4 +71,17 @@ module.exports = {
       })
     })
   },
+
+  deletePortfolioModel: (portfolioID) => {
+    return new Promise((resolve, reject) => {
+      const query = `DELETE FROM talentportfolio WHERE ?`
+      db.query(query, {portfolioID: portfolioID}, (error, results, _fields) => {
+        if (!error) {
+          resolve(results)
+        } else {
+          reject(error)
+        }
+      })
+    })
+  }
 }
