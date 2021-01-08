@@ -11,12 +11,16 @@ module.exports = {
     p.project_desc, 
     p.project_sallary,
     p.project_owner,
+    c.company_name,
+    c.company_image,
     p.project_target, 
     h.hiring_status, 
     h.reply_message
     FROM hiring as h
     INNER JOIN companyproject as p
     on h.projectID = p.projectID
+    INNER JOIN company as c
+    on p.project_owner = c.companyID
     WHERE ${searchKey} LIKE '%${searchValue}%' ORDER BY h.offeringID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
       if (!err) {
         callback(result)
@@ -36,12 +40,16 @@ module.exports = {
         p.project_desc, 
         p.project_sallary,
         p.project_owner,
+        c.company_name,
+        c.company_image,
         p.project_target, 
         h.hiring_status, 
         h.reply_message
         FROM hiring as h
         INNER JOIN companyproject as p
         on h.projectID = p.projectID
+        INNER JOIN company as c
+        on p.project_owner = c.companyID
         WHERE project_owner = ${project_owner} ORDER BY h.offeringID DESC`, (err, result, fields) => {
           if (!err) {
             resolve(result)
@@ -62,12 +70,16 @@ module.exports = {
         p.project_desc, 
         p.project_sallary,
         p.project_owner,
+        c.company_name,
+        c.company_image,
         p.project_target, 
         h.hiring_status, 
         h.reply_message
         FROM hiring as h
         INNER JOIN companyproject as p
         on h.projectID = p.projectID
+        INNER JOIN company as c
+        on p.project_owner = c.companyID
         WHERE project_target = ${project_target} ORDER BY h.offeringID DESC`, (err, result, fields) => {
           if (!err) {
             resolve(result)
