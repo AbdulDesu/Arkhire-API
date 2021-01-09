@@ -60,7 +60,7 @@ module.exports = {
       })
     },
 
-    getProjectResponseByTargetAccountIDModel: (project_target) => {
+    getProjectResponseByTargetAccountIDModel: (project_target, searchKey, searchValue, limit, offset, callback) => {
       return new Promise((resolve, reject) => {
         db.query(`SELECT
         h.offeringID, 
@@ -80,7 +80,7 @@ module.exports = {
         on h.projectID = p.projectID
         INNER JOIN company as c
         on p.project_owner = c.companyID
-        WHERE project_target = ${project_target} ORDER BY h.offeringID DESC`, (err, result, fields) => {
+        WHERE project_target = ${project_target} AND ${searchKey} LIKE '%${searchValue}%' LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
           if (!err) {
             resolve(result)
           } else {

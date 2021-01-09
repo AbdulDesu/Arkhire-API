@@ -72,10 +72,35 @@ module.exports = {
     },
 
     getProjectResponseByTargetID: async (req, res) => {
+      const { project_target } = req.params
+      let { search, limit, page } = req.query
+      let searchKey = ''
+      let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'hiring_status'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 25
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
       try {
-        const { project_target } = req.params
-  
-        const result = await getProjectResponseByTargetAccountIDModel(project_target)
+        const result = await getProjectResponseByTargetAccountIDModel(project_target , searchKey, searchValue, limit, offset)
         if (result.length) {
           res.status(200).send({
             success: true,
