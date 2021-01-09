@@ -1,4 +1,4 @@
-const { getAllProjectResponseModel, getProjectResponseByOwnerIDModel, getProjectResponseByTargetAccountIDModel } = require('../models/projectresp')
+const { getAllProjectResponseModel, getProjectResponseByOwnerIDModel, getProjectResponseByTargetAccountIDModel, getProjectHighlightModel } = require('../models/projectresp')
 
 module.exports = {
 
@@ -96,5 +96,34 @@ module.exports = {
         })
       }
     },
+
+    
+    getProjectHighlight: async (req, res) => {
+      try {
+        const { project_target } = req.params
+  
+        const result = await getProjectHighlightModel(project_target)
+        if (result.length) {
+          res.status(200).send({
+            success: true,
+            message: `Project with target account id ${project_target}`,
+            data: result
+          })
+        } else {
+          res.status(404).send({
+            success: false,
+            message: `Project data with target account id ${project_target} Not Found!`
+          })
+        }
+      } catch (error) {
+        console.log(error)
+        req.status(500).send({
+          success: false,
+          message: 'Internal server error, Please try again later'
+        })
+      }
+    },
+
+
   
 }
