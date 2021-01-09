@@ -36,7 +36,7 @@ module.exports = {
     const { accountID } = req.params
 
     try {
-      const result = await this.getTalentByAccountIDModel(accountID)
+      const result = await getTalentByAccountIDModel(accountID)
 
       if(result.length){
         res.status(200).send({

@@ -1,4 +1,4 @@
-const { getAllCompanyModel, getCompanyByAccountHolderModel, getCompanyByIDModel, createCompanyModel, updateCompanyModel } = require('../models/company')
+const { getAllCompanyModel, getCompanyByAccountIDModel, getCompanyByIDModel, createCompanyModel, updateCompanyModel } = require('../models/company')
 
 module.exports = {
   getAllCompany: (req, res) => {
@@ -43,37 +43,16 @@ module.exports = {
     })
   },
 
-  getCompanyByHolder: (req, res) => {
-    let { search, limit, page } = req.query
-    let searchKey = ''
-    let searchValue = ''
+  getCompanyByAccountID: async (req, res, _fields) => {
+    const { accountID } = req.params
 
-    if (typeof search === 'object') {
-      searchKey = Object.keys(search)[0]
-      searchValue = Object.values(search)[0]
-    } else {
-      searchKey = 'account_name'
-      searchValue = search || ''
-    }
+    try {
+      const result = await getCompanyByAccountIDModel(accountID)
 
-    if (!limit) {
-      limit = 10
-    } else {
-      limit = parseInt(limit)
-    }
-
-    if (!page) {
-      page = 1
-    } else {
-      page = parseInt(page)
-    }
-    const offset = (page - 1) * limit
-
-    getCompanyByAccountHolderModel(searchKey, searchValue, limit, offset, result => {
-      if (result.length) {
+      if(result.length){
         res.status(200).send({
           success: true,
-          message: 'Company List',
+          message: `Company with account id ${accountID}`,
           data: result
         })
       } else {
@@ -82,8 +61,15 @@ module.exports = {
           message: 'Company Not Found!'
         })
       }
-    })
-  },
+    }
+    catch (error) {
+      console.log(error)
+      req.status(500).send({
+      success: false,
+      message: 'Internal server error, Please try again later!'
+      })
+    }
+   },
 
   getCompanyByID: async (req, res) => {
     try {
