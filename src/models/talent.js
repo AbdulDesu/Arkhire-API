@@ -95,7 +95,7 @@ module.exports = {
     ON t.talentID = av.talentID
     INNER JOIN talentskill as ts
     ON t.talentID = ts.talentID
-    WHERE ${searchKey} LIKE '%${searchValue}%'  ORDER BY RAND() LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+    WHERE ${searchKey} LIKE '%${searchValue}%'  ORDER BY talentID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
       if (!err) {
         callback(result)
       } else {
@@ -130,7 +130,7 @@ module.exports = {
     ON t.talentID = av.talentID
     INNER JOIN talentskill as ts
     ON t.talentID = ts.talentID
-    WHERE  ${searchKey} LIKE '%${searchValue}%' ORDER BY RAND() DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+    WHERE  ${searchKey} LIKE '%${searchValue}%' ORDER BY talentID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
       if (!err) {
         callback(result)
       } else {
@@ -200,7 +200,7 @@ module.exports = {
     ON t.talentID = av.talentID
     INNER JOIN talentskill as ts
     ON t.talentID = ts.talentID
-    WHERE  ${searchKey} LIKE '%${searchValue}%' ORDER BY RAND() LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+    WHERE  ${searchKey} LIKE '%${searchValue}%' ORDER BY talentID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
       if (!err) {
         callback(result)
       } else {
