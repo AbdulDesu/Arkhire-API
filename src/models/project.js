@@ -3,7 +3,19 @@ const { companyOfferingModel, deleteOfferingModel } = require('../models/hirepro
 
 module.exports = {
     getAllProjectModel:  (searchKey, searchValue, limit, offset, callback) => {
-        db.query(`SELECT * FROM companyproject WHERE ${searchKey} LIKE '%${searchValue}%' LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+        db.query(`SELECT 
+        p.projectID, 
+        p.project_tittle, 
+        p.project_desc, 
+        p.project_sallary,
+        p.project_owner,
+        c.company_name,
+        c.company_image,
+        p.postedAt
+        FROM companyproject as p
+        INNER JOIN company as c
+        on p.project_owner = c.companyID
+        WHERE ${searchKey} LIKE '%${searchValue}%' ORDER BY p.projectID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
           if (!err) {
             callback(result)
           } else {

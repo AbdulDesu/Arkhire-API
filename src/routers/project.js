@@ -3,10 +3,10 @@ const { getAllProject, getProjectByID, createProject, deleteProject, updateProje
 
 const router = Router()
 
-const { companyAuthorization } = require('../middleware/auth')
+const { companyAuthorization, allMemberAuthorization } = require('../middleware/auth')
 
-router.get('/', companyAuthorization, getAllProject)
-router.get('/:projectID', companyAuthorization, getProjectByID)
+router.get('/', allMemberAuthorization, getAllProject)
+router.get('/:projectID', allMemberAuthorization, getProjectByID)
 router.post('/', companyAuthorization, createProject)
 router.delete('/:projectID', companyAuthorization, deleteProject)
 router.put('/:projectID', companyAuthorization, updateProject)
