@@ -44,8 +44,7 @@ module.exports = {
         portfolio_title : inputData.portfolio_title,
         portfolio_desc : inputData.portfolio_desc,
         portfolio_repository : inputData.portfolio_repository,
-        portfolio_image: inputData.portfolio_image,
-        updatedAt: inputData.updatedAt
+        portfolio_image: inputData.portfolio_image
       }
       const query = `INSERT INTO talentportfolio SET ?`
       db.query(query, portfolioData, async (err, result, fields) => {
