@@ -19,6 +19,7 @@ module.exports = {
         ac.account_name,
         c.company_name,
         c.company_position,
+        c.company_location,
         c.company_latitude,
         c.company_longitude,
         c.company_type,
