@@ -27,7 +27,7 @@ module.exports = {
 
     getPortfolioByOwnerIDModel: (portfolio_owner) => {
       return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM talentportfolio WHERE portfolio_owner = ${portfolio_owner}`, (err, result, fields) => {
+        db.query(`SELECT * FROM talentportfolio WHERE portfolio_owner = ${portfolio_owner} ORDER BY updatedAt DESC`, (err, result, fields) => {
           if (!err) {
             resolve(result)
           } else {
