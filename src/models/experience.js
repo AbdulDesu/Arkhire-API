@@ -13,7 +13,7 @@ module.exports = {
 
     getExperienceByOwnerIDModel: (experience_owner) => {
       return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM talentexperience WHERE experience_owner = ${experience_owner}`, (err, result, fields) => {
+        db.query(`SELECT * FROM talentexperience WHERE experience_owner = ${experience_owner} ORDER BY experience_end DESC`, (err, result, fields) => {
           if (!err) {
             resolve(result)
           } else {
