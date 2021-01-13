@@ -150,19 +150,19 @@ module.exports = {
     
     getProjectHighlight: async (req, res) => {
       try {
-        const { project_target } = req.params
+        const { participator_owner } = req.params
   
-        const result = await getProjectHighlightModel(project_target)
+        const result = await getProjectHighlightModel(participator_owner)
         if (result.length) {
           res.status(200).send({
             success: true,
-            message: `Project with target account id ${project_target}`,
+            message: `Project with target account id ${participator_owner}`,
             data: result
           })
         } else {
           res.status(404).send({
             success: false,
-            message: `Project data with target account id ${project_target} Not Found!`
+            message: `Project data with target account id ${participator_owner} Not Found!`
           })
         }
       } catch (error) {
