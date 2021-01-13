@@ -33,6 +33,7 @@ module.exports = {
           p.project_duration, 
           p.project_desc, 
           p.project_sallary,
+          p.project_image,
           p.project_owner,
           c.company_name,
           c.company_image,
