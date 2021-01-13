@@ -151,7 +151,6 @@ module.exports = {
     getProjectHighlight: async (req, res) => {
       try {
         const { participator_owner } = req.params
-  
         const result = await getProjectHighlightModel(participator_owner)
         if (result.length) {
           res.status(200).send({

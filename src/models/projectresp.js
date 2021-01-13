@@ -113,7 +113,7 @@ module.exports = {
         on h.offering_owner = t.talentID
         INNER JOIN account as ac
         on t.accountID = ac.accountID
-        WHERE ac.accountID = ${participator_owner} LIMIT 5`, (err, result, fields) => {
+        WHERE ac.accountID = ${participator_owner} ORDER BY h.offeringID DESC LIMIT 5`, (err, result, fields) => {
           if (!err) {
             resolve(result)
           } else {
