@@ -55,7 +55,23 @@ module.exports = {
 
     getProjectByIDModel: (projectID) => {
         return new Promise((resolve, reject) => {
-          db.query(`SELECT * FROM companyproject WHERE projectID = ${projectID}`, (err, result, fields) => {
+          db.query(`SELECT 
+          p.projectID, 
+          p.project_tittle,
+          p.project_duration, 
+          p.project_desc, 
+          p.project_sallary,
+          p.project_image,
+          p.project_owner,
+          c.company_name,
+          c.company_image,
+          p.postedAt
+          FROM companyproject as p
+          INNER JOIN company as c
+          on p.project_owner = c.companyID
+          INNER JOIN account as ac
+          on c.accountID = ac.accountID
+          WHERE projectID = ${projectID}`, (err, result, fields) => {
             if (!err) {
               resolve(result)
             } else {

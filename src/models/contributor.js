@@ -10,7 +10,8 @@ module.exports = {
             t.talentID,
             ac.account_name,
             t.talent_tittle,
-            t.talent_image
+            t.talent_image,
+            h.hiring_status
             FROM companycontributor as cc
             INNER JOIN hiring as h
             on cc.participator_owner = h.offeringID
