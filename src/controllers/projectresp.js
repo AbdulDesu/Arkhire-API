@@ -46,20 +46,45 @@ module.exports = {
     },
 
     getProjectResponseByOwnerID: async (req, res) => {
+      const { project_owner } = req.params
+      let { search, limit, page } = req.query
+      let searchKey = ''
+      let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'project_tittle'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 25
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
       try {
-        const { project_owner } = req.params
-  
-        const result = await getProjectResponseByOwnerIDModel(project_owner)
+        const result = await getProjectResponseByOwnerIDModel(project_owner , searchKey, searchValue, limit, offset)
         if (result.length) {
           res.status(200).send({
             success: true,
-            message: `Project with owner company id ${project_owner}`,
+            message: `Project with owner account id ${project_owner}`,
             data: result
           })
         } else {
           res.status(404).send({
             success: false,
-            message: `Project data with owner company id ${project_owner} Not Found!`
+            message: `Project data with owner account id ${project_owner} Not Found!`
           })
         }
       } catch (error) {

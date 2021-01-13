@@ -1,4 +1,4 @@
-const { getAllOfferingModel, getOfferingByIDModel, updateOfferByIDModel } = require('../models/hireprogress')
+const { companyOfferingModel, getAllOfferingModel, getOfferingByIDModel, updateOfferByIDModel } = require('../models/hireprogress')
 
 module.exports = {
     getAllOffer: (req, res) => {
@@ -98,5 +98,28 @@ module.exports = {
           message: 'Internal server error, Please try again later!'
           })
         }
-      }
+      },
+
+      createOffer: async (req, res) => {
+        try {
+          const result = await companyOfferingModel(req.body)
+          if (result.affectedRows) {
+            res.status(200).send({
+              success: true,
+              message: 'Hiring Succes!'
+            })
+          } else {
+            res.status(400).send({
+              success: false,
+              message: 'Failed to create Hiring!'
+            })
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(500).send({
+            success: false,
+            message: 'Internal Server Error, Please try again later'
+          })
+        }
+      },
 }

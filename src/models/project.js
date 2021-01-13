@@ -43,9 +43,7 @@ module.exports = {
             project_duration: inputData.project_duration,
             project_desc: inputData.project_desc,
             project_sallary: inputData.project_sallary,
-            project_owner: inputData.project_owner,
-            project_target: inputData.project_target,
-            postedAt: inputData.postedAt
+            project_owner: inputData.project_owner
           }
           const query = `INSERT INTO companyproject SET ?`
           db.query(query, projectData, async (err, result, fields) => {
@@ -65,6 +63,39 @@ module.exports = {
           db.query(query,{ projectID: projectID }, async (error, results, _fields) => {
             if (!error) {
                 await deleteOfferingModel(projectID)
+              resolve(results)
+            } else {
+              reject(error)
+            }
+          })
+        })
+      },
+
+      createNewProjectModel: (inputData) => {
+        return new Promise((resolve, reject) => {
+          const projectData = {
+            project_tittle: inputData.project_tittle,
+            project_duration: inputData.project_duration,
+            project_desc: inputData.project_desc,
+            project_sallary: inputData.project_sallary,
+            project_owner: inputData.project_owner
+          }
+          const query = `INSERT INTO companyproject SET ?`
+          db.query(query, projectData, async (err, result, fields) => {
+            if (!err) {
+              resolve(result)
+            } else {
+              reject(new Error(err))
+            }
+          })
+        })
+      },
+
+      deleteNewProjectByIDModel: (projectID) => {
+        return new Promise((resolve, reject) => {
+          const query = `DELETE FROM companyproject WHERE ?`
+          db.query(query,{ projectID: projectID }, async (error, results, _fields) => {
+            if (!error) {
               resolve(results)
             } else {
               reject(error)
