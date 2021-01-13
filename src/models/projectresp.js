@@ -58,7 +58,7 @@ module.exports = {
         on h.offering_owner = t.talentID
         INNER JOIN account ac2
         on t.accountID = ac2.accountID
-        WHERE ac.accountID = ${project_owner} AND ${searchKey} LIKE '%${searchValue}%' ORDER BY h.offeringID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+        WHERE p.projectID = ${project_owner} AND ${searchKey} LIKE '%${searchValue}%' ORDER BY h.offeringID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
           if (!err) {
             resolve(result)
           } else {

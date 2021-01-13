@@ -78,13 +78,13 @@ module.exports = {
         if (result.length) {
           res.status(200).send({
             success: true,
-            message: `Project with owner account id ${project_owner}`,
+            message: `Project with id ${project_owner} hiring list`,
             data: result
           })
         } else {
           res.status(404).send({
             success: false,
-            message: `Project data with owner account id ${project_owner} Not Found!`
+            message: `Project with id ${project_owner} Not Found!`
           })
         }
       } catch (error) {
