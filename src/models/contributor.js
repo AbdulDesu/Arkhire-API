@@ -65,7 +65,7 @@ module.exports = {
         })
       },
 
-    getContributorByParticipatorID: (participator_owner) => {
+    getContributorByParticipatorID: (participator_owner, searchKey, searchValue, limit, offset, callback) => {
       return new Promise((resolve, reject) => {
           db.query(`SELECT
           cc.contributorID,
@@ -91,7 +91,7 @@ module.exports = {
           on h.offering_owner = t.talentID
           INNER JOIN account as ac
           on t.accountID = ac.accountID
-          WHERE ac.accountID = ${participator_owner}`, (err, result, fields) => {
+          WHERE ac.accountID = ${participator_owner} AND ${searchKey} LIKE '%${searchValue}%' ORDER BY h.offeringID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
           if (!err) {
               resolve(result)
           } else {
