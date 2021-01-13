@@ -1,4 +1,4 @@
-const { getAllProjectModel, getProjectByIDModel, createProjectModel, createNewProjectModel, deleteProjectByIDModel, deleteNewProjectByIDModel, updateProjectByIDModel, updateProjectWithImageByIDModel } = require('../models/project')
+const { getAllProjectModel, getProjectByIDModel, getProjectByOwnerAccountIDModel, createProjectModel, createNewProjectModel, deleteProjectByIDModel, deleteNewProjectByIDModel, updateProjectByIDModel, updateProjectWithImageByIDModel } = require('../models/project')
 
 module.exports = {
     getAllProject: (req, res) => {
@@ -43,6 +43,59 @@ module.exports = {
           }
         })
       },
+
+      getProjectByOwner: async (req, res) => {
+        const { project_owner } = req.params
+        let { search, limit, page } = req.query
+        let searchKey = ''
+        let searchValue = ''
+  
+      if (typeof search === 'object') {
+        searchKey = Object.keys(search)[0]
+        searchValue = Object.values(search)[0]
+      } else {
+        searchKey = 'project_tittle'
+        searchValue = search || ''
+      }
+  
+      if (!limit) {
+        limit = 25
+      } else {
+        limit = parseInt(limit)
+      }
+  
+      if (!page) {
+        page = 1
+      } else {
+        page = parseInt(page)
+      }
+  
+      const offset = (page - 1) * limit
+  
+        try {
+          const result = await getProjectByOwnerAccountIDModel(project_owner , searchKey, searchValue, limit, offset)
+          if (result.length) {
+            res.status(200).send({
+              success: true,
+              message: `Project with owner account id ${project_owner}`,
+              data: result
+            })
+          } else {
+            res.status(404).send({
+              success: false,
+              message: `Project data with owner account id ${project_owner} Not Found!`
+            })
+          }
+        } catch (error) {
+          console.log(error)
+          req.status(500).send({
+            success: false,
+            message: 'Internal server error, Please try again later'
+          })
+        }
+      },
+
+      
 
       getProjectByID: async (req, res) => {
         try {
