@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2021 at 10:57 PM
+-- Generation Time: Jan 13, 2021 at 04:10 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -146,23 +146,20 @@ INSERT INTO `company` (`companyID`, `accountID`, `company_name`, `company_positi
 CREATE TABLE `companycontributor` (
   `contributorID` int(11) NOT NULL,
   `contributor_owner` int(11) NOT NULL,
-  `participator_name` int(11) NOT NULL
+  `participator_owner` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `companycontributor`
 --
 
-INSERT INTO `companycontributor` (`contributorID`, `contributor_owner`, `participator_name`) VALUES
-(1, 1, 2),
-(2, 2, 19),
-(3, 4, 22),
-(4, 4, 19),
-(5, 7, 22),
-(6, 10, 19),
-(7, 11, 15),
-(8, 12, 19),
-(9, 12, 22);
+INSERT INTO `companycontributor` (`contributorID`, `contributor_owner`, `participator_owner`) VALUES
+(1, 1, 1),
+(2, 2, 6),
+(7, 11, 1),
+(8, 11, 15),
+(9, 12, 15),
+(11, 17, 14);
 
 -- --------------------------------------------------------
 
@@ -177,7 +174,6 @@ CREATE TABLE `companyproject` (
   `project_desc` varchar(500) DEFAULT NULL,
   `project_sallary` varchar(25) DEFAULT NULL,
   `project_owner` int(11) NOT NULL,
-  `project_target` int(11) NOT NULL,
   `postedAt` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -185,15 +181,13 @@ CREATE TABLE `companyproject` (
 -- Dumping data for table `companyproject`
 --
 
-INSERT INTO `companyproject` (`projectID`, `project_tittle`, `project_duration`, `project_desc`, `project_sallary`, `project_owner`, `project_target`, `postedAt`) VALUES
-(1, 'Create Hyperion Absent Apps', '1 WEEK', 'Make A Automatic absent for hyperion employee', 'Rp. 3.000.000', 1, 2, '0000-00-00 00:00:00'),
-(2, 'Create Hololive Website', '1 WEEK', 'In this project, we invite you to contribute on our...', 'Rp. 8.000.000', 2, 19, '0000-00-00 00:00:00'),
-(4, 'Create A Hololive Visual Novel Game', '1 MONTH', 'In this project, we invite you to contribute on our...', 'Rp. 12.000.000', 2, 22, '0000-00-00 00:00:00'),
-(5, 'Update our Deep Fake Tech', '3 MONTH', 'In this project, we invite you to contribute on our...', 'Rp. 14.000.000', 4, 19, '0000-00-00 00:00:00'),
-(7, 'Make me a music player apps', '6 MONTH', 'In this project, we invite you to contribute on our...', 'Rp. 9.000.000', 3, 22, '0000-00-00 00:00:00'),
-(10, 'Torus A.I Recognition', '4 WEEK', 'orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a', 'Rp. 32.000.000', 8, 19, '2021-01-06 10:16:03'),
-(11, 'Lily Gardens Api', '2 Month', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp.  8.000.000', 6, 15, '2021-01-06 10:21:13'),
-(12, 'E-Wallet Torus Apps', '6 MONTH', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp. 16.000.000', 8, 19, '2021-01-06 10:23:05');
+INSERT INTO `companyproject` (`projectID`, `project_tittle`, `project_duration`, `project_desc`, `project_sallary`, `project_owner`, `postedAt`) VALUES
+(1, 'Create Hyperion Absent Apps', '1 WEEK', 'Make A Automatic absent for hyperion employee', 'Rp. 3.000.000', 1, '0000-00-00 00:00:00'),
+(2, 'Create Hololive Website', '1 WEEK', 'In this project, we invite you to contribute on our...', 'Rp. 8.000.000', 2, '0000-00-00 00:00:00'),
+(5, 'Update our Deep Fake Tech', '3 MONTH', 'In this project, we invite you to contribute on our...', 'Rp. 14.000.000', 4, '0000-00-00 00:00:00'),
+(11, 'Lily Gardens Api', '2 Month', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp.  8.000.000', 6, '2021-01-06 10:21:13'),
+(12, 'E-Wallet Torus Apps', '6 MONTH', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp. 16.000.000', 8, '2021-01-06 10:23:05'),
+(17, 'Genshin Impact Moefication', '6 MONTH', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp. 9.000.000', 5, '2021-01-12 14:55:30');
 
 -- --------------------------------------------------------
 
@@ -216,12 +210,12 @@ CREATE TABLE `hiring` (
 INSERT INTO `hiring` (`offeringID`, `projectID`, `hiring_status`, `reply_message`, `repliedAt`) VALUES
 (1, 1, 'Approved', 'Thank you for adding me to your project sir, I appreciate it', '0000-00-00 00:00:00'),
 (2, 2, 'Waiting', 'Sorry, I am in other busy project', '0000-00-00 00:00:00'),
-(4, 4, 'Approved', 'Yatta', '0000-00-00 00:00:00'),
 (5, 5, 'Declined', 'Sorry Sir, I can accept your offering project. Because that\'s quest is very difficult for me', '0000-00-00 00:00:00'),
-(7, 7, 'Approved', 'nope', '0000-00-00 00:00:00'),
-(10, 10, 'Approved', 'kalsdklkasdlksladkasldkaskdlk', '2021-01-06 10:29:27'),
 (11, 11, 'Waiting', NULL, '2021-01-06 10:29:27'),
-(12, 12, 'Waiting', NULL, '2021-01-06 10:29:27');
+(12, 12, 'Waiting', NULL, '2021-01-06 10:29:27'),
+(16, 17, 'Waiting', NULL, '2021-01-13 02:55:43'),
+(17, 17, 'Waiting', NULL, '2021-01-13 02:59:32'),
+(18, 17, 'Waiting', NULL, '2021-01-13 03:03:55');
 
 -- --------------------------------------------------------
 
@@ -387,15 +381,14 @@ ALTER TABLE `company`
 ALTER TABLE `companycontributor`
   ADD PRIMARY KEY (`contributorID`),
   ADD KEY `contributor_owner` (`contributor_owner`),
-  ADD KEY `participator_name` (`participator_name`);
+  ADD KEY `participator_name` (`participator_owner`);
 
 --
 -- Indexes for table `companyproject`
 --
 ALTER TABLE `companyproject`
   ADD PRIMARY KEY (`projectID`),
-  ADD KEY `project_owner` (`project_owner`),
-  ADD KEY `project_target` (`project_target`);
+  ADD KEY `project_owner` (`project_owner`);
 
 --
 -- Indexes for table `hiring`
@@ -458,19 +451,19 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `companycontributor`
 --
 ALTER TABLE `companycontributor`
-  MODIFY `contributorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `contributorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `companyproject`
 --
 ALTER TABLE `companyproject`
-  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `hiring`
 --
 ALTER TABLE `hiring`
-  MODIFY `offeringID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `offeringID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `talent`
@@ -517,14 +510,13 @@ ALTER TABLE `company`
 --
 ALTER TABLE `companycontributor`
   ADD CONSTRAINT `companycontributor_ibfk_1` FOREIGN KEY (`contributor_owner`) REFERENCES `companyproject` (`projectID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `companycontributor_ibfk_3` FOREIGN KEY (`participator_name`) REFERENCES `account` (`accountID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `companycontributor_ibfk_2` FOREIGN KEY (`participator_owner`) REFERENCES `talent` (`talentID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `companyproject`
 --
 ALTER TABLE `companyproject`
-  ADD CONSTRAINT `companyproject_ibfk_1` FOREIGN KEY (`project_owner`) REFERENCES `company` (`companyID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `companyproject_ibfk_2` FOREIGN KEY (`project_target`) REFERENCES `account` (`accountID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `companyproject_ibfk_3` FOREIGN KEY (`project_owner`) REFERENCES `company` (`companyID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `hiring`
