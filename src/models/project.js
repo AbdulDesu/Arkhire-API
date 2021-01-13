@@ -44,6 +44,7 @@ module.exports = {
             project_duration: inputData.project_duration,
             project_desc: inputData.project_desc,
             project_sallary: inputData.project_sallary,
+            project_image: inputData.project_image,
             project_owner: inputData.project_owner
           }
           const query = `INSERT INTO companyproject SET ?`
@@ -79,6 +80,7 @@ module.exports = {
             project_duration: inputData.project_duration,
             project_desc: inputData.project_desc,
             project_sallary: inputData.project_sallary,
+            project_image: inputData.project_image,
             project_owner: inputData.project_owner
           }
           const query = `INSERT INTO companyproject SET ?`
@@ -106,6 +108,23 @@ module.exports = {
       },
       
       updateProjectByIDModel: (projectID, data) => {
+        return new Promise((resolve, reject) => {
+          const query = `
+            UPDATE companyproject
+               SET ?
+             WHERE projectID = ${projectID}
+          `
+          db.query(query, data, (error, result, _fields) => {
+            if (!error) {
+              resolve(result)
+            } else {
+              reject(error)
+            }
+          })
+        })
+      },
+
+      updateProjectWithImageByIDModel: (projectID, data) => {
         return new Promise((resolve, reject) => {
           const query = `
             UPDATE companyproject

@@ -1,4 +1,4 @@
-const { getAllProjectModel, getProjectByIDModel, createProjectModel, createNewProjectModel, deleteProjectByIDModel, deleteNewProjectByIDModel, updateProjectByIDModel } = require('../models/project')
+const { getAllProjectModel, getProjectByIDModel, createProjectModel, createNewProjectModel, deleteProjectByIDModel, deleteNewProjectByIDModel, updateProjectByIDModel, updateProjectWithImageByIDModel } = require('../models/project')
 
 module.exports = {
     getAllProject: (req, res) => {
@@ -94,6 +94,14 @@ module.exports = {
       },
 
       createNewProject: async (req, res) => {
+        req.body.project_image = req.file === undefined ? '' : req.file.filename
+  
+      const data = {
+        ...req.body,
+        project_image: req.body.project_image
+      }
+      
+      delete data.project_image
         try {
           const result = await createNewProjectModel(req.body)
           if (result.affectedRows) {
@@ -155,7 +163,7 @@ module.exports = {
     
           const resSelect = await getProjectByIDModel(projectID)
           if (resSelect.length) {
-            const resDelete = await deleteProjectByIDModel(projectID)
+            const resDelete = await deleteNewProjectByIDModel(projectID)
             if (resDelete.affectedRows) {
               res.status(200).send({
                 success: true,
@@ -189,6 +197,45 @@ module.exports = {
     
           if (catchData.length) {
             const result = await updateProjectByIDModel(projectID, req.body)
+    
+            if (result.affectedRows) {
+              res.status(200).send({
+                success: true,
+                message: `Project with id ${projectID} Updated succesfully`,
+              })
+            } else {
+              console.log(error)
+              res.status(404).send({
+                success: false,
+                message: 'Talent Not Found!'
+              })
+            }
+          }
+        } catch (error) {
+          console.log(error)
+          req.status(500).send({
+          success: false,
+          message: 'Internal server error, Please try again later!'
+          })
+        }
+      },
+
+      updateProjectWithImage: async (req, res, _fields) => {
+        req.body.project_image = req.file === undefined ? '' : req.file.filename
+  
+        const data = {
+        ...req.body,
+        project_image: req.body.project_image
+        }
+      
+      delete data.project_image
+
+        try {
+          const { projectID } = req.params
+          const catchData = await getProjectByIDModel(projectID)
+    
+          if (catchData.length) {
+            const result = await updateProjectWithImageByIDModel(projectID, req.body)
     
             if (result.affectedRows) {
               res.status(200).send({

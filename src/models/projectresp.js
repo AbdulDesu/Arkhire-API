@@ -35,19 +35,30 @@ module.exports = {
         db.query(`SELECT
         h.offeringID,
         h.hiring_status, 
-        h.reply_message, 
+        h.reply_message,
+        h.offering_owner,
+        ac2.account_name,
+        t.talent_tittle,
+        t.talent_image,
         p.projectID, 
         p.project_tittle, 
         p.project_duration, 
         p.project_desc, 
         p.project_sallary,
+        p.project_image,
         p.project_owner
         FROM hiring as h
         INNER JOIN companyproject as p
         on h.projectID = p.projectID
         INNER JOIN company as c
         on p.project_owner = c.companyID
-        WHERE accountID = ${project_owner} AND ${searchKey} LIKE '%${searchValue}%' ORDER BY h.offeringID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+        INNER JOIN account as ac
+        on c.accountID = ac.accountID
+        INNER JOIN talent as t
+        on h.offering_owner = t.talentID
+        INNER JOIN account ac2
+        on t.accountID = ac2.accountID
+        WHERE ac.accountID = ${project_owner} AND ${searchKey} LIKE '%${searchValue}%' ORDER BY h.offeringID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
           if (!err) {
             resolve(result)
           } else {
@@ -99,6 +110,7 @@ module.exports = {
         p.project_desc,
         p.project_duration,
         p.project_sallary,
+        p.project_image,
         h.offeringID,
         h.hiring_status,
         h.reply_message

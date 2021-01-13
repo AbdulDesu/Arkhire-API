@@ -77,6 +77,7 @@ module.exports = {
           p.project_desc,
           p.project_duration,
           p.project_sallary,
+          p.project_image,
           h.offeringID,
           h.hiring_status,
           h.reply_message
