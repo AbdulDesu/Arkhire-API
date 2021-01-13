@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2021 at 08:44 AM
+-- Generation Time: Jan 13, 2021 at 05:02 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -172,6 +172,7 @@ CREATE TABLE `companyproject` (
   `project_duration` varchar(50) DEFAULT NULL,
   `project_desc` varchar(500) DEFAULT NULL,
   `project_sallary` varchar(25) DEFAULT NULL,
+  `project_image` text DEFAULT NULL,
   `project_owner` int(11) NOT NULL,
   `postedAt` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -180,13 +181,14 @@ CREATE TABLE `companyproject` (
 -- Dumping data for table `companyproject`
 --
 
-INSERT INTO `companyproject` (`projectID`, `project_tittle`, `project_duration`, `project_desc`, `project_sallary`, `project_owner`, `postedAt`) VALUES
-(1, 'Create Hyperion Absent Apps', '1 WEEK', 'Make A Automatic absent for hyperion employee', 'Rp. 3.000.000', 1, '0000-00-00 00:00:00'),
-(2, 'Create Hololive Website', '1 WEEK', 'In this project, we invite you to contribute on our...', 'Rp. 8.000.000', 2, '0000-00-00 00:00:00'),
-(5, 'Update our Deep Fake Tech', '3 MONTH', 'In this project, we invite you to contribute on our...', 'Rp. 14.000.000', 4, '0000-00-00 00:00:00'),
-(11, 'Lily Gardens Api', '2 Month', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp.  8.000.000', 6, '2021-01-06 10:21:13'),
-(12, 'E-Wallet Torus Apps', '6 MONTH', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp. 16.000.000', 8, '2021-01-06 10:23:05'),
-(17, 'Genshin Impact Moefication', '6 MONTH', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp. 9.000.000', 8, '2021-01-12 14:55:30');
+INSERT INTO `companyproject` (`projectID`, `project_tittle`, `project_duration`, `project_desc`, `project_sallary`, `project_image`, `project_owner`, `postedAt`) VALUES
+(1, 'Create Hyperion Absent Apps', '1 WEEK', 'Make A Automatic absent for hyperion employee', 'Rp. 3.000.000', 'project_image-1610553195376.png', 1, '0000-00-00 00:00:00'),
+(2, 'Create Hololive Website', '1 WEEK', 'In this project, we invite you to contribute on our...', 'Rp. 8.000.000', 'project_image-1610553148130.png', 2, '0000-00-00 00:00:00'),
+(5, 'Update our Deep Fake Tech', '3 MONTH', 'In this project, we invite you to contribute on our...', 'Rp. 14.000.000', 'project_image-1610552985806.png', 4, '0000-00-00 00:00:00'),
+(11, 'Lily Gardens Api', '2 Month', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp.  8.000.000', 'project_image-1610552780657.png', 6, '2021-01-06 10:21:13'),
+(12, 'E-Wallet Torus Apps', '6 MONTH', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp. 16.000.000', 'project_image-1610552674586.jpg', 8, '2021-01-06 10:23:05'),
+(17, 'Genshin Impact Moefication', '6 MONTH', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp. 9.000.000', 'project_image-1610552504946.jpg', 8, '2021-01-12 14:55:30'),
+(19, 'Hololie Visual Novel', '8 MONTH', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'Rp. 23.000.000', 'project_image-1610552037496.png', 2, '2021-01-13 15:33:57');
 
 -- --------------------------------------------------------
 
@@ -455,7 +457,7 @@ ALTER TABLE `companycontributor`
 -- AUTO_INCREMENT for table `companyproject`
 --
 ALTER TABLE `companyproject`
-  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `hiring`
