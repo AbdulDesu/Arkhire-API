@@ -2,7 +2,7 @@ const db = require('../helpers/db')
 
 module.exports = {
 
-    getContributorModel: (contributor_owner) => {
+    getContributorModel: (participator_owner) => {
         return new Promise((resolve, reject) => {
             db.query(`SELECT
             cc.contributorID,
@@ -18,7 +18,7 @@ module.exports = {
             on h.offering_owner = t.talentID
             INNER JOIN account as ac
             on t.accountID = ac.accountID
-            WHERE projectID = ${contributor_owner}`, (err, result, fields) => {
+            WHERE projectID = ${participator_owner}`, (err, result, fields) => {
             if (!err) {
                 resolve(result)
             } else {

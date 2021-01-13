@@ -3,9 +3,9 @@ const { getContributorModel, getContributorByIDModel, getContributorByParticipat
 module.exports = {
     getContributorRoom: async (req, res) => {
         try {
-          const { contributor_owner } = req.params
+          const { participator_owner } = req.params
     
-          const result = await getContributorModel(contributor_owner)
+          const result = await getContributorModel(participator_owner)
           if (result.length) {
             res.status(200).send({
               success: true,
