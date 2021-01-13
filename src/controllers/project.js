@@ -1,4 +1,4 @@
-const { getAllProjectModel, getProjectByIDModel, createProjectModel, deleteProjectByIDModel, updateProjectByIDModel } = require('../models/project')
+const { getAllProjectModel, getProjectByIDModel, createProjectModel, createNewProjectModel, deleteProjectByIDModel, deleteNewProjectByIDModel, updateProjectByIDModel } = require('../models/project')
 
 module.exports = {
     getAllProject: (req, res) => {
@@ -93,7 +93,63 @@ module.exports = {
         }
       },
 
+      createNewProject: async (req, res) => {
+        try {
+          const result = await createNewProjectModel(req.body)
+          if (result.affectedRows) {
+            res.status(200).send({
+              success: true,
+              message: 'Project added !'
+            })
+          } else {
+            res.status(400).send({
+              success: false,
+              message: 'Failed to add project'
+            })
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(500).send({
+            success: false,
+            message: 'Internal Server Error, Please try again later'
+          })
+        }
+      },
+
       deleteProject: async (req, res) => {
+        try {
+          const { projectID } = req.params
+    
+          const resSelect = await getProjectByIDModel(projectID)
+          if (resSelect.length) {
+            const resDelete = await deleteProjectByIDModel(projectID)
+            if (resDelete.affectedRows) {
+              res.status(200).send({
+                success: true,
+                message: `Project With id ${projectID} has been deleted succesfully`
+              })
+            } else {
+              res.status(404).send({
+                success: false,
+                message: 'Failed to delete project'
+              })
+            }
+          } else {
+            res.status(404).send({
+              success: false,
+              message: `Project with id ${projectID} not found`
+            })
+          }
+        } catch (error) {
+          console.log(error)
+          req.status(500).send({
+            success: false,
+            message: 'Internal server error, Please Try Again Later'
+          })
+        }
+      },
+
+      deleteNewProject: async (req, res) => {
         try {
           const { projectID } = req.params
     

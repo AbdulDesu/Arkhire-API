@@ -1,17 +1,23 @@
 const db = require('../helpers/db')
+const { createContributorModel } = require('../models/contributor')
 
 module.exports = {
-    companyOfferingModel: (projectID) => {
-        return new Promise((resolve, reject) => {
-            const query = `INSERT INTO hiring SET ?`
-            db.query(query, {projectID: projectID}, async (err, res, _fields) => {
-                if (!err) {
-                    resolve(res)
-                } else {
-                    reject(new Error(err))
-                }
-            })
+    companyOfferingModel: (inputData) => {
+      return new Promise((resolve, reject) => {
+        const hiringData = {
+          projectID: inputData.projectID,
+          offering_owner: inputData.offering_owner
+        }
+        const query = `INSERT INTO hiring SET ?`
+        db.query(query, hiringData, async (err, result, fields) => {
+          if (!err) {
+            await createContributorModel(result.insertId)
+            resolve(result)
+          } else {
+            reject(new Error(err))
+          }
         })
+      })
     },
 
     deleteOfferingModel: (projectID) => {
