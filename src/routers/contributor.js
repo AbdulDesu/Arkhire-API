@@ -4,7 +4,7 @@ const { getContributorRoom, getContributorID, getParticipator, createContributor
 const router = Router()
 const { allMemberAuthorization, talentAuthorization } = require('../middleware/auth')
 
-router.get('/room/:contributor_owner', allMemberAuthorization, getContributorRoom)
+router.get('/room/:participator_owner', allMemberAuthorization, getContributorRoom)
 router.get('/:contributorID', allMemberAuthorization, getContributorID)
 router.get('/participator/:participator_owner', allMemberAuthorization, getParticipator)
 router.post('/', allMemberAuthorization, createContributorRoom)

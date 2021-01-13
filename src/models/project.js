@@ -5,7 +5,8 @@ module.exports = {
     getAllProjectModel:  (searchKey, searchValue, limit, offset, callback) => {
         db.query(`SELECT 
         p.projectID, 
-        p.project_tittle, 
+        p.project_tittle,
+        p.project_duration, 
         p.project_desc, 
         p.project_sallary,
         p.project_owner,
