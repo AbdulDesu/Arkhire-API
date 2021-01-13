@@ -6,11 +6,12 @@ module.exports = {
       return new Promise((resolve, reject) => {
         const hiringData = {
           projectID: inputData.projectID,
-          reply_message: inputData.reply_message
+          offering_owner: inputData.offering_owner
         }
         const query = `INSERT INTO hiring SET ?`
         db.query(query, hiringData, async (err, result, fields) => {
           if (!err) {
+            await createContributorModel(result.insertId)
             resolve(result)
           } else {
             reject(new Error(err))

@@ -6,18 +6,19 @@ module.exports = {
         return new Promise((resolve, reject) => {
             db.query(`SELECT
             cc.contributorID,
-            cc.contributor_owner,
             cc.participator_owner,
-            ac.account_name,
             t.talentID,
+            ac.account_name,
             t.talent_tittle,
             t.talent_image
             FROM companycontributor as cc
-            INNER JOIN account as ac
-            on cc.participator_owner = ac.accountID
+            INNER JOIN hiring as h
+            on cc.participator_owner = h.offeringID
             INNER JOIN talent as t
-            on cc.participator_owner = t.accountID
-            WHERE contributor_owner = ${contributor_owner} ORDER BY ac.account_name ASC`, (err, result, fields) => {
+            on h.offering_owner = t.talentID
+            INNER JOIN account as ac
+            on t.accountID = ac.accountID
+            WHERE projectID = ${contributor_owner}`, (err, result, fields) => {
             if (!err) {
                 resolve(result)
             } else {
@@ -68,7 +69,6 @@ module.exports = {
       return new Promise((resolve, reject) => {
           db.query(`SELECT
           cc.contributorID,
-          cc.contributor_owner,
           cc.participator_owner,
           c.companyID,
           c.company_name,
@@ -81,16 +81,16 @@ module.exports = {
           h.hiring_status,
           h.reply_message
           FROM companycontributor as cc
-          INNER JOIN talent as t
-          on cc.participator_owner = t.talentID
+          INNER JOIN hiring as h
+          on cc.participator_owner = h.offeringID
           INNER JOIN companyproject as p
-          on cc.contributor_owner = p.projectID
+          on h.projectID = p.projectID
           INNER JOIN company as c
           on p.project_owner = c.companyID
+          INNER JOIN talent as t
+          on h.offering_owner = t.talentID
           INNER JOIN account as ac
           on t.accountID = ac.accountID
-          INNER JOIN hiring as h
-          on h.projectID = p.projectID
           WHERE ac.accountID = ${participator_owner}`, (err, result, fields) => {
           if (!err) {
               resolve(result)
@@ -101,14 +101,10 @@ module.exports = {
       })
   },
 
-  createContributorModel : (inputData) => {
+  createContributorModel : (participator_owner) => {
     return new Promise((resolve, reject) => {
-      const projectData = {
-        contributor_owner : inputData.contributor_owner,
-        participator_owner : inputData.participator_owner
-      }
       const query = `INSERT INTO companycontributor SET ?`
-      db.query(query, projectData, async (err, result, fields) => {
+      db.query(query, {participator_owner : participator_owner}, async (err, result, fields) => {
         if (!err) {
           resolve(result)
         } else {

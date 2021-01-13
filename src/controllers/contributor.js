@@ -120,13 +120,13 @@ module.exports = {
           if (result.length) {
             res.status(200).send({
               success: true,
-              message: `Project with participator talent id ${participator_owner}`,
+              message: `Project with participator account id ${participator_owner}`,
               data: result
             })
           } else {
             res.status(404).send({
               success: false,
-              message: `Project data with participator talent id ${participator_owner} Not Found!`
+              message: `Project data with participator account id ${participator_owner} Not Found!`
             })
           }
         } catch (error) {

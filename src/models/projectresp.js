@@ -27,23 +27,21 @@ module.exports = {
       } else {
         callback(err)
       }
-    })
+      })
     },
 
     getProjectResponseByOwnerIDModel: (project_owner, searchKey, searchValue, limit, offset, callback) => {
       return new Promise((resolve, reject) => {
         db.query(`SELECT
-        h.offeringID, 
+        h.offeringID,
+        h.hiring_status, 
+        h.reply_message, 
         p.projectID, 
         p.project_tittle, 
         p.project_duration, 
         p.project_desc, 
         p.project_sallary,
-        p.project_owner,
-        c.accountID,
-        p.project_target, 
-        h.hiring_status, 
-        h.reply_message
+        p.project_owner
         FROM hiring as h
         INNER JOIN companyproject as p
         on h.projectID = p.projectID
