@@ -9,6 +9,7 @@ module.exports = {
         p.project_duration, 
         p.project_desc, 
         p.project_sallary,
+        p.project_image,
         p.project_owner,
         c.company_name,
         c.company_image,
@@ -16,6 +17,8 @@ module.exports = {
         FROM companyproject as p
         INNER JOIN company as c
         on p.project_owner = c.companyID
+        INNER JOIN account as ac
+        on c.accountID = ac.accountID
         WHERE ${searchKey} LIKE '%${searchValue}%' ORDER BY p.projectID DESC LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
           if (!err) {
             callback(result)
