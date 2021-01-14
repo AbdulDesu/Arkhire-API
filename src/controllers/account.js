@@ -90,7 +90,7 @@ module.exports = {
           })
         } 
       } else {
-        res.status(403).send({
+        res.status(409).send({
           success: false,
           message: 'Account has registered!'
         })
