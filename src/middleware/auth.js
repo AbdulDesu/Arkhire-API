@@ -86,7 +86,7 @@ module.exports = {
               if (result.privilege === 1 || result.privilege === 2 || process.env.ADMIN_KEY) {
                 next()
               } else {
-                response.status(403).send({
+                response.status(405).send({
                   success: false,
                   message: 'You can not access this database, Register First!'
                 })
