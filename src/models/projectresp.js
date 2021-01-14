@@ -14,7 +14,8 @@ module.exports = {
     c.company_name,
     c.company_image,
     p.project_target, 
-    h.hiring_status, 
+    h.hiring_status,
+    h.offered_salary, 
     h.reply_message
     FROM hiring as h
     INNER JOIN companyproject as p
@@ -34,7 +35,8 @@ module.exports = {
       return new Promise((resolve, reject) => {
         db.query(`SELECT
         h.offeringID,
-        h.hiring_status, 
+        h.hiring_status,
+        h.offered_salary, 
         h.reply_message,
         h.offering_owner,
         ac2.account_name,
@@ -68,36 +70,6 @@ module.exports = {
       })
     },
 
-    getProjectResponseByTargetAccountIDModel: (project_target, searchKey, searchValue, limit, offset, callback) => {
-      return new Promise((resolve, reject) => {
-        db.query(`SELECT
-        h.offeringID, 
-        p.projectID, 
-        p.project_tittle, 
-        p.project_duration, 
-        p.project_desc, 
-        p.project_sallary,
-        p.project_owner,
-        c.company_name,
-        c.company_image,
-        p.project_target, 
-        h.hiring_status, 
-        h.reply_message
-        FROM hiring as h
-        INNER JOIN companyproject as p
-        on h.projectID = p.projectID
-        INNER JOIN company as c
-        on p.project_owner = c.companyID
-        WHERE project_target = ${project_target} AND ${searchKey} LIKE '%${searchValue}%' LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
-          if (!err) {
-            resolve(result)
-          } else {
-            reject(new Error(err))
-          }
-        })
-      })
-    },
-
     getProjectHighlightModel: (participator_owner) => {
       return new Promise((resolve, reject) => {
         db.query(`SELECT
@@ -113,6 +85,7 @@ module.exports = {
         p.project_image,
         h.offeringID,
         h.hiring_status,
+        h.offered_salary,
         h.reply_message
         FROM companycontributor as cc
         INNER JOIN hiring as h

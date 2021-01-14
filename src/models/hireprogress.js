@@ -6,6 +6,7 @@ module.exports = {
       return new Promise((resolve, reject) => {
         const hiringData = {
           projectID: inputData.projectID,
+          offered_salary: inputData.offered_salary,
           offering_owner: inputData.offering_owner
         }
         const query = `INSERT INTO hiring SET ?`

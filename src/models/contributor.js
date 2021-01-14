@@ -81,6 +81,7 @@ module.exports = {
           p.project_image,
           h.offeringID,
           h.hiring_status,
+          h.offered_salary,
           h.reply_message
           FROM companycontributor as cc
           INNER JOIN hiring as h
