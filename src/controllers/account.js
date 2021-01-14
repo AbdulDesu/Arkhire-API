@@ -161,14 +161,15 @@ module.exports = {
               message: 'Success Login!',
               data: payload
             })
+
           } else {
-            res.status(400).send({
+            res.status(405).send({
               success: false,
               message: 'Wrong Password!'
             })
           }
         } else {
-          res.status(400).send({
+          res.status(404).send({
             success: false,
             message: 'Email/Account not registered!'
           })
