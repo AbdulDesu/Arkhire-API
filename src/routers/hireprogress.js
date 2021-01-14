@@ -3,10 +3,10 @@ const { getAllOffer, getOfferingByID, updateOffer, createOffer } = require('../c
 
 const router = Router()
 
-const { talentAuthorization } = require('../middleware/auth')
+const { talentAuthorization, companyAuthorization } = require('../middleware/auth')
 
 router.get('/', talentAuthorization, getAllOffer)
 router.get('/:offeringID', talentAuthorization, getOfferingByID)
 router.put('/:offeringID', talentAuthorization, updateOffer)
-router.post('/', talentAuthorization, createOffer)
+router.post('/', companyAuthorization, createOffer)
 module.exports = router
