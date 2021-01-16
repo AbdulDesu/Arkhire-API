@@ -115,5 +115,41 @@ module.exports = {
         }
       })
     })
-  }
+  },
+
+  checkContributorModel: (projectID, searchKey, searchValue, limit, offset, callback) => {
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT
+        cc.contributorID,
+        cc.participator_owner,
+        ac.account_name,
+        t.talent_tittle,
+        p.projectID,
+        p.project_tittle,
+        p.project_desc,
+        p.project_image,
+        h.offeringID,
+        h.hiring_status,
+        h.offered_salary,
+        h.reply_message
+        FROM companycontributor as cc
+        INNER JOIN hiring as h
+        on cc.participator_owner = h.offeringID
+        INNER JOIN companyproject as p
+        on h.projectID = p.projectID
+        INNER JOIN company as c
+        on p.project_owner = c.companyID
+        INNER JOIN talent as t
+        on h.offering_owner = t.talentID
+        INNER JOIN account as ac
+        on t.accountID = ac.accountID
+        WHERE h.projectID = ${projectID} AND ${searchKey} LIKE '%${searchValue}%' LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+        if (!err) {
+            resolve(result)
+        } else {
+            reject(new Error(err))
+        }
+        })
+    })
+},
 }
