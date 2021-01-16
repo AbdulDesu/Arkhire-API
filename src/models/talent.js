@@ -31,7 +31,7 @@ module.exports = {
       ON t.talentID = av.talentID
       INNER JOIN talentskill as ts
       ON t.talentID = ts.talentID
-      WHERE ?
+      WHERE talentID = ${talentID}
       `
       db.query(query, { talentID: talentID }, (err, result, _fields) => {
         if (!err) {
