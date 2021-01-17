@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { getTalentByID, getTalentByAccountID, getReadyToHireTalent, filterTalentByName, filterTalentByLocation, filterTalentByTitle, filterTalentByWorkTime, updateTalent } = require('../controllers/talent')
+const { getTalentByID, getTalentByAccountID, getReadyToHireTalent, filterTalentByName, filterTalentByLocation, filterTalentByTitle, filterTalentByWorkTime, updateTalent, updateTalentWithoutImage } = require('../controllers/talent')
 
 const router = Router()
 
@@ -14,5 +14,6 @@ router.get("/", allMemberAuthorization, getReadyToHireTalent)
 router.get('/filter/location', allMemberAuthorization, filterTalentByLocation)
 router.get('/filter/time', allMemberAuthorization, filterTalentByWorkTime)
 router.put('/:talentID', talentAuthorization, uploadImage, updateTalent)
+router.put('/text/:talentID', talentAuthorization, updateTalentWithoutImage)
 
 module.exports = router

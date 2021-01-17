@@ -320,5 +320,39 @@ module.exports = {
           message: 'Internal Server Error, Please try again later'
         })
     }
+  },
+
+  updateTalentWithoutImage: async (req, res, _fields) => {
+    const { talentID } = req.params
+    
+    try {
+      const caughtData = await getTalentByIDModel(talentID)
+
+      if (caughtData.length) {
+        const result = await updateTalentModel(talentID, req.body)
+          if (result.affectedRows) {
+            res.status(200).send({
+              success: true,
+              message: `Talent with id ${talentID} updated succesfully`
+            })
+          } else {
+            res.status(400).send({
+              success: false,
+              message: 'Failed to update talent'
+            })
+          }
+        } else {
+          res.status(404).send({
+            success: false,
+            message: `Talent data with id ${talentID} Not Found!`
+          })
+        }      
+      } catch (error) {
+        console.log(error)
+        res.status(500).send({
+          success: false,
+          message: 'Internal Server Error, Please try again later'
+        })
+    }
   }
 }
