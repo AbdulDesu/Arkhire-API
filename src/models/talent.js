@@ -106,7 +106,7 @@ module.exports = {
     ON t.talentID = av.talentID
     INNER JOIN talentskill as ts
     ON t.talentID = ts.talentID
-    WHERE ${searchKey} LIKE '%${searchValue}%'  ORDER BY RAND() LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+    WHERE talent_tittle = 'Android Developer' OR talent_tittle = 'Devops Engineer' OR talent_tittle = 'Fullstack Mobile' OR talent_tittle = 'Fullstack Web' ORDER BY RAND() LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
       if (!err) {
         callback(result)
       } else {
