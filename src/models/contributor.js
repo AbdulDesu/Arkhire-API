@@ -19,7 +19,7 @@ module.exports = {
             on h.offering_owner = t.talentID
             INNER JOIN account as ac
             on t.accountID = ac.accountID
-            WHERE projectID = ${participator_owner} AND h.hiring_status = 'Approved' ORDER BY h.offeringID DESC`, (err, result, fields) => {
+            WHERE projectID = ${participator_owner} AND h.hiring_status = 'Approved'`, (err, result, fields) => {
             if (!err) {
                 resolve(result)
             } else {
