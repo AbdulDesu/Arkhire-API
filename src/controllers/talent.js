@@ -1,4 +1,4 @@
-const { getTalentByIDModel, getTalentByAccountIDModel, filterTalentByNameModel, filterTalentByLocationModel, filterTalentByTitleModel, filterTalentByWorkTimeModel, updateTalentModel } = require('../models/talent')
+const { getTalentByIDModel, getTalentByAccountIDModel, getReadyToHireTalentModel, filterTalentByNameModel, filterTalentByLocationModel, filterTalentByTitleModel, filterTalentByWorkTimeModel, updateTalentModel } = require('../models/talent')
 
 module.exports = {
 
@@ -59,6 +59,51 @@ module.exports = {
       })
     }
    },
+
+  //Filter Talent Who Ready To Hire
+  getReadyToHireTalent: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'talent_tittle'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 25
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
+    getReadyToHireTalentModel(searchKey, searchValue, limit, offset, result => {
+      if (result.length) {
+        res.status(200).send({
+          success: true,
+          message: 'Filtering talent with ready able',
+          data: result
+        })
+      } else {
+        res.status(404).send({
+          success: false,
+          message: 'Nothing Found!'
+        })
+      }
+    })
+  },
+
 
   //Filter Talent By Name
   filterTalentByName: (req, res) => {
