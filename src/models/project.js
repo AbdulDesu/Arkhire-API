@@ -169,22 +169,5 @@ module.exports = {
             }
           })
         })
-      },
-
-      updateProjectWithImageByIDModel: (projectID, data) => {
-        return new Promise((resolve, reject) => {
-          const query = `
-            UPDATE companyproject
-               SET ?
-             WHERE projectID = ${projectID}
-          `
-          db.query(query, data, (error, result, _fields) => {
-            if (!error) {
-              resolve(result)
-            } else {
-              reject(error)
-            }
-          })
-        })
       }
 }

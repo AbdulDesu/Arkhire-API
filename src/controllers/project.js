@@ -1,4 +1,4 @@
-const { getAllProjectModel, getProjectByIDModel, getProjectByOwnerAccountIDModel, createProjectModel, createNewProjectModel, deleteProjectByIDModel, deleteNewProjectByIDModel, updateProjectByIDModel, updateProjectWithImageByIDModel } = require('../models/project')
+const { getAllProjectModel, getProjectByIDModel, getProjectByOwnerAccountIDModel, createNewProjectModel, deleteNewProjectByIDModel, updateProjectByIDModel} = require('../models/project')
 
 module.exports = {
     getAllProject: (req, res) => {
@@ -95,8 +95,6 @@ module.exports = {
         }
       },
 
-      
-
       getProjectByID: async (req, res) => {
         try {
           const { projectID } = req.params
@@ -119,29 +117,6 @@ module.exports = {
           req.status(500).send({
             success: false,
             message: 'Internal server error, Please try again later'
-          })
-        }
-      },
-
-      createProject: async (req, res) => {
-        try {
-          const result = await createProjectModel(req.body)
-          if (result.affectedRows) {
-            res.status(200).send({
-              success: true,
-              message: 'Project added, Sending to talent.. Succes!'
-            })
-          } else {
-            res.status(400).send({
-              success: false,
-              message: 'Failed to add project'
-            })
-          }
-        } catch (error) {
-          console.log(error)
-          res.status(500).send({
-            success: false,
-            message: 'Internal Server Error, Please try again later'
           })
         }
       },
@@ -173,39 +148,6 @@ module.exports = {
           res.status(500).send({
             success: false,
             message: 'Internal Server Error, Please try again later'
-          })
-        }
-      },
-
-      deleteProject: async (req, res) => {
-        try {
-          const { projectID } = req.params
-    
-          const resSelect = await getProjectByIDModel(projectID)
-          if (resSelect.length) {
-            const resDelete = await deleteProjectByIDModel(projectID)
-            if (resDelete.affectedRows) {
-              res.status(200).send({
-                success: true,
-                message: `Project With id ${projectID} has been deleted succesfully`
-              })
-            } else {
-              res.status(404).send({
-                success: false,
-                message: 'Failed to delete project'
-              })
-            }
-          } else {
-            res.status(404).send({
-              success: false,
-              message: `Project with id ${projectID} not found`
-            })
-          }
-        } catch (error) {
-          console.log(error)
-          req.status(500).send({
-            success: false,
-            message: 'Internal server error, Please Try Again Later'
           })
         }
       },
@@ -244,6 +186,15 @@ module.exports = {
       },
 
       updateProject: async (req, res, _fields) => {
+        req.body.project_image = req.file === undefined ? '' : req.file.filename
+  
+        const data = {
+        ...req.body,
+        project_image: req.body.project_image
+        }
+      
+        delete data.project_image
+
         try {
           const { projectID } = req.params
           const catchData = await getProjectByIDModel(projectID)
@@ -273,22 +224,13 @@ module.exports = {
         }
       },
 
-      updateProjectWithImage: async (req, res, _fields) => {
-        req.body.project_image = req.file === undefined ? '' : req.file.filename
-  
-        const data = {
-        ...req.body,
-        project_image: req.body.project_image
-        }
-      
-      delete data.project_image
-
+      updateProjectWithoutImage: async (req, res, _fields) => {
         try {
           const { projectID } = req.params
           const catchData = await getProjectByIDModel(projectID)
     
           if (catchData.length) {
-            const result = await updateProjectWithImageByIDModel(projectID, req.body)
+            const result = await updateProjectByIDModel(projectID, req.body)
     
             if (result.affectedRows) {
               res.status(200).send({

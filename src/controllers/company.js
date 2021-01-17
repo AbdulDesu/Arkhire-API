@@ -159,5 +159,38 @@ module.exports = {
           message: 'Internal Server Error, Please try again later'
         })
       } 
-    }
+    },
+
+    updateCompanyWithoutImage: async (req, res) => {
+      const { companyID } = req.params
+      try {
+  
+        const caughtData = await getCompanyByIDModel(companyID)
+  
+        if (caughtData.length) {
+          const result = await updateCompanyModel(companyID, req.body)
+            if (result.affectedRows) {
+              res.status(200).send({
+                success: true,
+                message: `Company with id ${companyID} updated succesfully`
+              })
+            } else {
+              res.status(400).send({
+                success: false,
+                message: 'Failed to update company'
+              })
+            }
+          } else {
+            res.status(404).send({
+              success: false,
+              message: `Company data with id ${companyID} Not Found!`
+            })
+          }      
+        } catch (error) {
+          res.status(500).send({
+            success: false,
+            message: 'Internal Server Error, Please try again later'
+          })
+        } 
+      }
 }
