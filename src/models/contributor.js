@@ -8,6 +8,7 @@ module.exports = {
             cc.contributorID,
             cc.participator_owner,
             t.talentID,
+            ac.accountID,
             ac.account_name,
             t.talent_tittle,
             t.talent_image,
