@@ -137,6 +137,38 @@ module.exports = {
       } 
     },
 
+    updatePassword: async (req, res) => {
+      try {
+        const { accountID } = req.params
+        const caughtData = await getAccountByIDModel(accountID)
+  
+        if (caughtData.length) {
+          const result = await updateAccountModel(accountID, req.body)
+            if (result.affectedRows) {
+              res.status(200).send({
+                success: true,
+                message: `Account with id ${accountID} updated succesfully`
+              })
+            } else {
+              res.status(400).send({
+                success: false,
+                message: 'Failed to update account'
+              })
+            }
+          } else {
+            res.status(404).send({
+              success: false,
+              message: `Account data with id ${accountID} Not Found!`
+            })
+          }      
+        } catch (error) {
+          res.status(500).send({
+            success: false,
+            message: 'Internal Server Error, Please try again later'
+          })
+        } 
+      },
+
     loginAccount: async (req, res, _next) => {
       try {
         const { email, password } = req.body
@@ -144,7 +176,6 @@ module.exports = {
   
         if (findData.length) {
           const match = await bcrypt.compare(password, findData[0].password)
-  
           if (match) {
             const { accountID, account_name, account_email, privilege } = findData [0]
             let payload = {
