@@ -109,5 +109,38 @@ module.exports = {
             message: 'Internal server error, Please try again later!'
             })
           }
-      }
+      },
+
+
+      updateGithub: async (req, res) => {
+        
+        const { talentID } = req.params
+
+          try {
+            const catchData = await getTalentAchivementByTalentIDModel(talentID)
+      
+            if (catchData.length) {
+              const result = await updateTalentAchivementModel(talentID, req.body)
+      
+              if (result.affectedRows) {
+                  res.status(200).send({
+                    success: true,
+                    message: `Achivement Updated Succesfully`
+                  })
+                } else {
+                  console.log(error)
+                  res.status(404).send({
+                    success: false,
+                    message: 'Achivement Not Found!'
+                  })
+                }
+              }
+            } catch (error) {
+              console.log(error)
+              req.status(500).send({
+              success: false,
+              message: 'Internal server error, Please try again later!'
+              })
+            }
+        }
 }
