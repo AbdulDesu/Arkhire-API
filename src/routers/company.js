@@ -6,7 +6,7 @@ const { companyAuthorization, allMemberAuthorization } = require('../middleware/
 const uploadCompanyImage = require('../middleware/multer_company')
 
 router.get('/', allMemberAuthorization, getAllCompany)
-router.get('/search', allMemberAuthorization, searchCompany)
+router.get('/filter/name', allMemberAuthorization, searchCompany)
 router.get("/holder/:accountID", allMemberAuthorization, getCompanyByAccountID)
 router.get('/:companyID', allMemberAuthorization, getCompanyByID)
 router.post('/', companyAuthorization, createCompany)
