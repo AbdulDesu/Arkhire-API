@@ -1,4 +1,4 @@
-const { getAllCompanyModel, getCompanyByAccountIDModel, getCompanyByIDModel, createCompanyModel, updateCompanyModel } = require('../models/company')
+const { getAllCompanyModel, searchCompanyModel, getCompanyByAccountIDModel, getCompanyByIDModel, createCompanyModel, updateCompanyModel } = require('../models/company')
 
 module.exports = {
   getAllCompany: (req, res) => {
@@ -28,6 +28,48 @@ module.exports = {
     const offset = (page - 1) * limit
 
     getAllCompanyModel(searchKey, searchValue, limit, offset, result => {
+      if (result.length) {
+        res.status(200).send({
+          success: true,
+          message: 'Company List',
+          data: result
+        })
+      } else {
+        res.status(404).send({
+          success: false,
+          message: 'Company Not Found!'
+        })
+      }
+    })
+  },
+
+  searchCompany: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'company_name'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 50
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+    const offset = (page - 1) * limit
+
+    searchCompanyModel(searchKey, searchValue, limit, offset, result => {
       if (result.length) {
         res.status(200).send({
           success: true,

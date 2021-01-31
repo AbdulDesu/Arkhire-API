@@ -1,7 +1,17 @@
 const db = require('../helpers/db')
 
 module.exports = {
-  getAllCompanyModel: (searchKey, searchValue, limit, offset, callback) => {
+  getAllCompanyModel: ( limit, offset, callback) => {
+    db.query(`SELECT * FROM company WHERE company_type = 'Enterprise' OR company_type = 'Startup' OR company_type = 'Software House' ORDER BY RAND() LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+      if (!err) {
+        callback(result)
+      } else {
+        callback(err)
+      }
+    })
+  },
+
+  searchCompanyModel: (searchKey, searchValue, limit, offset, callback) => {
     db.query(`SELECT * FROM company WHERE ${searchKey} LIKE '%${searchValue}%' ORDER BY RAND() LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
       if (!err) {
         callback(result)

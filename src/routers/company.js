@@ -1,11 +1,12 @@
 const { Router } = require('express')
-const { getAllCompany, getCompanyByAccountID, getCompanyByID, createCompany, updateCompany, updateCompanyWithoutImage } = require('../controllers/company')
+const { getAllCompany, searchCompany, getCompanyByAccountID, getCompanyByID, createCompany, updateCompany, updateCompanyWithoutImage } = require('../controllers/company')
 const router = Router()
 
 const { companyAuthorization, allMemberAuthorization } = require('../middleware/auth')
 const uploadCompanyImage = require('../middleware/multer_company')
 
 router.get('/', allMemberAuthorization, getAllCompany)
+router.get('/search', allMemberAuthorization, searchCompany)
 router.get("/holder/:accountID", allMemberAuthorization, getCompanyByAccountID)
 router.get('/:companyID', allMemberAuthorization, getCompanyByID)
 router.post('/', companyAuthorization, createCompany)

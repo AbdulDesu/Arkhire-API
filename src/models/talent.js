@@ -80,7 +80,7 @@ module.exports = {
     })
   },
 
-  getReadyToHireTalentModel: (searchKey, searchValue, limit, offset, callback) => {
+  getReadyToHireTalentModel: (limit, offset, callback) => {
     db.query(`SELECT 
     t.talentID, 
     ac.accountID, 
