@@ -27,7 +27,7 @@ module.exports = {
     }
     const offset = (page - 1) * limit
 
-    getAllCompanyModel(searchKey, searchValue, limit, offset, result => {
+    getAllCompanyModel(limit, offset, result => {
       if (result.length) {
         res.status(200).send({
           success: true,

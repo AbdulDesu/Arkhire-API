@@ -88,7 +88,7 @@ module.exports = {
 
     const offset = (page - 1) * limit
 
-    getReadyToHireTalentModel(searchKey, searchValue, limit, offset, result => {
+    getReadyToHireTalentModel(limit, offset, result => {
       if (result.length) {
         res.status(200).send({
           success: true,
